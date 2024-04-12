@@ -6,7 +6,7 @@ public class CharacterMovements : MonoBehaviour
 {
     public Rigidbody2D rb;
 
-    public float speed = 10;
+    public float speed = 120;
     Vector2 move;
 
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class CharacterMovements : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(move.x * speed * Time.deltaTime, move.y * speed * Time.deltaTime);
+        rb.velocity = new Vector2(move.x * speed * Time.deltaTime, move.y * (speed * 2) * Time.deltaTime);
     }
 
     //    public void Move(Transform transform)
