@@ -24,27 +24,27 @@ public class Enemy2Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Vector2 point = currentPoint.position - transform.position;
+        Vector2 point = currentPoint.position - transform.position;
 
-        //if (currentPoint == LeftEdge.transform)
-        //{
-        //    rbEnemy2.velocity = new Vector2(speed, 0);
-        //}
+        if (currentPoint == LeftEdge.transform)
+        {
+            rbEnemy2.velocity = new Vector2(speed, 0);
+        }
 
-        //else
-        //{
-        //    rbEnemy2.velocity = new Vector2(-speed, 0);
-        //}
+        else
+        {
+            rbEnemy2.velocity = new Vector2(-speed, 0);
+        }
 
-        //if (Vector2.Distance(transform.position,currentPoint.position) < 0.5f && currentPoint == LeftEdge.transform)
-        //{
-        //    currentPoint = RightEdge.transform;
-        //}
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == LeftEdge.transform)
+        {
+            currentPoint = RightEdge.transform;
+        }
 
-        //if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == RightEdge.transform)
-        //{
-        //    currentPoint = LeftEdge.transform;
-        //}
+        if (Vector2.Distance(transform.position, currentPoint.position) < 0.5f && currentPoint == RightEdge.transform)
+        {
+            currentPoint = LeftEdge.transform;
+        }
         //move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         //rbEnemy2.velocity = new Vector2(move.x * speed * Time.deltaTime, move.y * (speed * 2) * Time.deltaTime);
     }
