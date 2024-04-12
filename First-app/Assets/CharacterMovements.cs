@@ -4,27 +4,30 @@ using UnityEngine;
 
 public class CharacterMovements : MonoBehaviour
 {
-    public Rigidbody2D rb;
-
-    public float speed = 120;
-    Vector2 move;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private float speed;
+    private Vector2 direction;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = 120;
     }
 
     // Update is called once per frame
     void Update()
-    { 
-        //Move(transform);
-        move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+    {
+        float horizontalDirection = Input.GetAxisRaw("Horizontal");
+        float verticalDirection = Input.GetAxisRaw("Vertical");
+
+        direction = new Vector2(horizontalDirection, verticalDirection);
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(move.x * speed * Time.deltaTime, move.y * (speed * 2) * Time.deltaTime);
+        //TODO: make the character jump by one Up key press without need to press and hold the key
+        rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
     }
 
     //    public void Move(Transform transform)
