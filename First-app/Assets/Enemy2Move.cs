@@ -6,33 +6,33 @@ public class Enemy2Move : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rbEnemy2;
     [SerializeField] private float speed;
+    [SerializeField] private float timer;
 
-    //TODO: to make it going by timer, not by edge points
-    [SerializeField] private GameObject LeftEdge;
-    [SerializeField] private GameObject RightEdge;
-    private Transform currentPoint;
-
-
-    private Vector2 move;
     // Start is called before the first frame update
     void Awake()
     {
         rbEnemy2 = GetComponent<Rigidbody2D>();
-        speed = 5;
-        rbEnemy2.transform.position = LeftEdge.transform.position;
+        speed = 3;
+        rbEnemy2.transform.position = new Vector2(-7.45f, -2.17f);
+        timer = 0.0f;
+        rbEnemy2.velocity = new Vector2(speed, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (rbEnemy2.transform.position.x < LeftEdge.transform.position.x)
+        timer = timer + Time.deltaTime;
+
+        if (timer > 5f && rbEnemy2.velocity[0] < 0)
         {
-            rbEnemy2.velocity = new Vector2(speed, 0); 
+            rbEnemy2.velocity = new Vector2(speed, 0);
+            timer = 0.0f;            
         }
 
-        if (rbEnemy2.transform.position.x > RightEdge.transform.position.x)
+        if (timer > 5f && rbEnemy2.velocity[0] > 0)
         {
             rbEnemy2.velocity = new Vector2(-speed, 0);
+            timer = 0.0f;
         }
         //Vector2 point = currentPoint.position - transform.position;
 
