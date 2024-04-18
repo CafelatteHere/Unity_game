@@ -43,6 +43,7 @@ public class Enemy1Move : MonoBehaviour
         {
             Debug.Log("collision!");
             rbEnemy1.velocity = new Vector2(0, 0);
+            StartCoroutine(WaitAndAwake());
             Debug.Log("awake!");
         }
     }
