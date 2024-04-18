@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8066384971571250943}
   - component: {fileID: 4338517304680878332}
   - component: {fileID: 7927089174898975899}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ThrownObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
