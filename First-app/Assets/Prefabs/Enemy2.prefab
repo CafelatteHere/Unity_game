@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 8332057726735663014}
   - component: {fileID: 8332057726735663011}
   - component: {fileID: 8332057726735663008}
-  - component: {fileID: 8332057726735663010}
+  - component: {fileID: 7591947850505196973}
+  - component: {fileID: -2633939807370306362}
   m_Layer: 7
   m_Name: Enemy2
   m_TagString: Untagged
@@ -134,7 +135,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 6
---- !u!114 &8332057726735663010
+--- !u!114 &7591947850505196973
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,9 +144,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 8332057726735663015}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f0d5bbe3a7b6498e81748f85485207a, type: 3}
+  m_Script: {fileID: 11500000, guid: e741851cba3ad425c91ecf922cc6b379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rbEnemy2: {fileID: 8332057726735663008}
-  speed: 50
-  timer: 0
+  _data:
+    _json: '{"declarations":{"Kind":"Object","collection":{"$content":[],"$version":"A"},"$version":"A"}}'
+    _objectReferences: []
+--- !u!114 &-2633939807370306362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8332057726735663015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 388a867c6a15e4cb78612f2ee6186310, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  flipTime: 4.9
+  startPoint: {x: 7.4, y: -2.3}

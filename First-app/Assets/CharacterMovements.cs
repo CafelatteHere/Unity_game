@@ -7,6 +7,8 @@ public class CharacterMovements : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private float speed;
     private Vector2 direction;
+    //we cat get it publicly but set only privately only in this script
+    public int currentPlayerDirection { get; private set; } = 1;
 
     // Start is called before the first frame update
     void Awake()
@@ -21,6 +23,17 @@ public class CharacterMovements : MonoBehaviour
         float horizontalDirection = Input.GetAxisRaw("Horizontal");
         float verticalDirection = Input.GetAxisRaw("Vertical");
 
+        if (horizontalDirection > 0)
+        {
+            currentPlayerDirection = 1;
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+        else
+        {
+            currentPlayerDirection = -1;
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+        }
+
         direction = new Vector2(horizontalDirection, verticalDirection);
     }
 
@@ -29,34 +42,5 @@ public class CharacterMovements : MonoBehaviour
         //TODO: make the character jump by one Up key press without need to press and hold the key
         rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
     }
-
-    //    public void Move(Transform transform)
-    //    {
-
-    //       //if (Input.GetKeyDown(KeyCode.LeftArrow) && CharacterRigidBody.position.x >= -9.5)
-    //       // {
-    //       //     CharacterRigidBody.velocity = Vector2.left * 7;
-    //       // } else if (Input.GetKeyDown(KeyCode.LeftArrow) && CharacterRigidBody.position.x >= -9.5)
-    //       // {
-    //       //     CharacterRigidBody.velocity = Vector2.zero;
-    //       //     //CharacterRigidBody.position.x = -9.5;
-    //       // }
-
-    //       // if (Input.GetKeyDown(KeyCode.RightArrow) && CharacterRigidBody.position.x <= -10.5)
-    //       // {
-    //       //     CharacterRigidBody.velocity = Vector2.right * 7;
-    //       // }
-    //       // else if (Input.GetKeyDown(KeyCode.RightArrow) && CharacterRigidBody.position.x <= -10.5)
-    //       // {
-    //       //     CharacterRigidBody.velocity = Vector2.zero;
-    //       // }
-
-    //       // if (Input.GetKeyDown(KeyCode.Space))
-    //       // {
-    //       //     CharacterRigidBody.velocity = new Vector2(CharacterRigidBody.velocity.y);
-    //       // }
-
-    //    }
-
 
 }
