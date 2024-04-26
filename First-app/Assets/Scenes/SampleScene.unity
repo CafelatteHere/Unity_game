@@ -937,7 +937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663015, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -1004,7 +1004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: boxSize.x
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: boxSize.y

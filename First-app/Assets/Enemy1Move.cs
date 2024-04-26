@@ -5,12 +5,12 @@ using UnityEngine;
 public class Enemy1Move : MonoBehaviour
 {
     //[SerializeField] private Rigidbody2D rbEnemy1;
-    [SerializeField] private float speed = 3;
+    [SerializeField] private float speed;
     [SerializeField] private float flipTime = 4.9f;
     //TODO change startPoint for Enemy2;
     [SerializeField] private Vector2 startPoint = new Vector2(7.4f, -2.3f);
     [SerializeField] private Vector2 boxSize;
-    [SerializeField] private float groundCheckDistance = 0.1f;
+    [SerializeField] private float groundCheckDistance;
 
     private Rigidbody2D rbEnemy;
     private float timer = 0.0f;
@@ -29,7 +29,9 @@ public class Enemy1Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        checkGround();
+        if (checkGround() == null) {
+            speed += -1;
+        } 
         //timer = timer + Time.deltaTime;
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
         
@@ -57,20 +59,24 @@ public class Enemy1Move : MonoBehaviour
         //}
     }
 
-    private void checkGround()
+    private bool checkGround()
     {
-        RaycastHit2D onGround = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        Debug.Log(onGround);
+        RaycastHit2D onGround1 = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        RaycastHit2D onGround2 = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
+        
         //if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
-        if (onGround == false)
+        if (onGround1 == false || onGround2 == false)
         {
             Debug.Log("hitting ground");
-           // return onGround.collider != null;
-            speed *= -1;
+           return onGround1.collider != null;
+            
+            
 
-
-
+        } else
+        {
+            return onGround1.collider == null;
         }
+       
     }
 
     private void OnDrawGizmos()
