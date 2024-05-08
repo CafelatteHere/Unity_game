@@ -389,7 +389,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 783911895}
   m_LocalRotation: {x: 0, y: 0, z: 0.08715578, w: 0.9961947}
-  m_LocalPosition: {x: 0.62, y: -0.08, z: 0.39541247}
+  m_LocalPosition: {x: 0.62, y: -0.04, z: 0.39541247}
   m_LocalScale: {x: 0.13062541, y: 0.18111172, z: 0.81545085}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -755,11 +755,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410364, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.21
+      value: 9.28
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410364, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.87
+      value: 3.92
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410364, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_LocalPosition.z
@@ -960,11 +960,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.08
+      value: -3.09
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.42
+      value: 1.72
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1000,7 +1000,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: speed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: boxSize.x
@@ -1015,8 +1015,20 @@ PrefabInstance:
       value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
+      propertyPath: startPoint.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
+      propertyPath: startPoint.y
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: groundCheckDistance
-      value: 0.77
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289109, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_Constraints

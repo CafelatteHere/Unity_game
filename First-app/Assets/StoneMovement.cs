@@ -5,7 +5,7 @@ using UnityEngine;
 public class StoneMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-    [SerializeField] private Vector2 LaunchSpeed = new Vector2(200, 200);
+    [SerializeField] private Vector2 LaunchSpeed = new Vector2(10, 5);
     private float destructionTime = 2f;
 
     // Start is called before the first frame update
@@ -25,7 +25,7 @@ public class StoneMovement : MonoBehaviour
 
     public void Launch(Vector2 direction)
     {
-        rb.AddForce(LaunchSpeed, ForceMode2D.Impulse);
+        rb.AddForce(LaunchSpeed, ForceMode2D.Impulse +20);
     }
 
     private void DestroyStone()

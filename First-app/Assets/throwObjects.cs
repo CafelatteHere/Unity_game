@@ -53,11 +53,6 @@ public class throwObjects : MonoBehaviour
         
     }
 
-
-        private class Stone: MonoBehaviour
-    {
-
-    }
         //read horiz inpu and vertical from oter file
         //if (characterRb.velocity.x >= 0)
         //{

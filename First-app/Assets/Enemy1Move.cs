@@ -4,37 +4,63 @@ using UnityEngine;
 
 public class Enemy1Move : MonoBehaviour
 {
-    //[SerializeField] private Rigidbody2D rbEnemy1;
     [SerializeField] private float speed;
     [SerializeField] private float flipTime = 4.9f;
-    //TODO change startPoint for Enemy2;
-    [SerializeField] private Vector2 startPoint = new Vector2(7.4f, -2.3f);
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
 
     private Rigidbody2D rbEnemy;
     private float timer = 0.0f;
     private bool isGrounded;
-    private LayerMask groundLayer;
+    [SerializeField] private LayerMask groundLayer=9;
+    private float width;
+    private float height;
+    private float bottomRight;
+    private float bottomLeft;
+    private float bottomHeight;
 
     // Start is called before the first frame update
     void Awake()
     {
         //Rigidbody2D rbEnemy1 makes it to be a new var 
         rbEnemy = GetComponent<Rigidbody2D>();
-        Debug.Log(rbEnemy);
-        rbEnemy.transform.position = startPoint;
+        width = GetComponent<Renderer>().bounds.size.x;
+        height = GetComponent<Renderer>().bounds.size.y;
+        //rbEnemy.transform.position = startPoint;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (checkGround() == null) {
-            speed += -1;
-        } 
-        //timer = timer + Time.deltaTime;
+        bottomRight = transform.position.x + width / 2;
+        bottomLeft = transform.position.x - width / 2;
+        bottomHeight = transform.position.y - height / 2;
+
+        //Debug.Log("checkGroundLeft()" + checkGroundLeft());
+        Debug.Log("checkGroundRight()" + checkGroundRight());
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
-        
+        if (checkGroundRight() == false)
+        {
+            rbEnemy.velocity = new Vector2(-1, rbEnemy.velocity.y);
+        }
+        //rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
+        //if (checkGroundLeft()) {
+        //    Debug.Log("checkGroundLeft()");
+        //    rbEnemy.velocity = new Vector2(1, rbEnemy.velocity.y);
+        //    Debug.Log(speed);
+        //} else if (checkGroundRight() == false)
+        //{
+        //    Debug.Log("checkGroundRight() == false");
+        //    rbEnemy.velocity = new Vector2(-1, rbEnemy.velocity.y);
+        //    Debug.Log(speed);
+        //}
+
+
+
+
+        //timer = timer + Time.deltaTime;
+
+
         //isGrounded = checkGround();
         //if (isGrounded == false)
         //{
@@ -59,32 +85,51 @@ public class Enemy1Move : MonoBehaviour
         //}
     }
 
-    private bool checkGround()
-    {
-        RaycastHit2D onGround1 = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        RaycastHit2D onGround2 = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayer);
-        
-        //if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, castDistance, groundLayer))
-        if (onGround1 == false || onGround2 == false)
-        {
-            Debug.Log("hitting ground");
-           return onGround1.collider != null;
-            
-            
+    //private bool checkGroundLeft()
+    //{
+    //    RaycastHit2D onGroundLeft = Physics2D.Raycast(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), new Vector3(bottomLeft, bottomHeight - groundCheckDistance, 0), groundLayer);
+    //    Color rayColor;
+    //    rayColor = Color.green;
+    //    Debug.Log("onGroundLeft.collider" + onGroundLeft.collider);
+    //    if (onGroundLeft.collider != null)
+    //    {
+    //        Debug.Log("onGroundLeft.collider != null");
+    //        rayColor = Color.green;
+    //    } else
+    //    {
+    //        Debug.Log("onGroundLeft.collider = null");
+    //        rayColor = Color.red;
+    //    }
 
-        } else
-        {
-            return onGround1.collider == null;
-        }
-       
+    //    return onGroundLeft.collider != null;
+    
+      
+    //}
+
+    private bool checkGroundRight()
+    {
+        Color color = Color.green;
+        float duration = 0.3f;
+        bool depthTest = true;
+        int layerMask = groundLayer;
+        RaycastHit2D onGroundRight = Physics2D.Raycast(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, layerMask);
+        Debug.DrawRay(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down, color, duration, depthTest);
+        Debug.Log(onGroundRight.collider);
+        //Debug.Log(onGroundRight.collider.gameObject);
+        return onGroundRight.collider != null;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position - transform.up * groundCheckDistance, boxSize);
+        // draw the ray on line 64 here;
+        // check the bottom line, add color to beams.
+        // add left and right bottom point for raycasts;
+        // Gizmos.DrawWireCube(transform.position - transform.up * groundCheckDistance, boxSize);
+        Gizmos.DrawLine(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), new Vector3(bottomLeft, bottomHeight - groundCheckDistance, 0));
+        Gizmos.DrawLine(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), new Vector3(bottomRight, bottomHeight - groundCheckDistance, 0));
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == 8)
         {
@@ -101,3 +146,4 @@ public class Enemy1Move : MonoBehaviour
         Debug.Log("Awake!");
     }
 }
+
