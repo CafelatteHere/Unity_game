@@ -887,17 +887,21 @@ PrefabInstance:
       propertyPath: groundCheckDistance
       value: 0.79
       objectReference: {fileID: 0}
+    - target: {fileID: -2633939807370306362, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
+      propertyPath: groundLayerMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663009, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663009, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.31
+      value: 7.2
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663009, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.42
+      value: -3.08
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663009, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_LocalPosition.z
@@ -937,7 +941,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663015, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -960,11 +964,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.09
+      value: -4.68
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.72
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1030,6 +1034,10 @@ PrefabInstance:
       propertyPath: groundCheckDistance
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
+      propertyPath: groundLayerMask.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289109, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_Constraints
       value: 4
@@ -1052,12 +1060,20 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8956758964463329199, guid: 1f26e108e42694800ace08c8e2bf7c22, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 18.958107
+      objectReference: {fileID: 0}
+    - target: {fileID: 8956758964463329199, guid: 1f26e108e42694800ace08c8e2bf7c22, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.9801999
+      objectReference: {fileID: 0}
+    - target: {fileID: 8956758964463329199, guid: 1f26e108e42694800ace08c8e2bf7c22, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0045
+      value: 0.0342
       objectReference: {fileID: 0}
     - target: {fileID: 8956758964463329199, guid: 1f26e108e42694800ace08c8e2bf7c22, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.1
+      value: -4.5077
       objectReference: {fileID: 0}
     - target: {fileID: 8956758964463329199, guid: 1f26e108e42694800ace08c8e2bf7c22, type: 3}
       propertyPath: m_LocalPosition.z
