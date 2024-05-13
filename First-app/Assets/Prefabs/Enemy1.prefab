@@ -146,6 +146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 388a867c6a15e4cb78612f2ee6186310, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rbEnemy2: {fileID: 0}
   speed: 0
-  timer: 0
+  boxSize: {x: 0, y: 0}
+  groundCheckDistance: 0
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0

@@ -15,6 +15,7 @@ public class Enemy1Move : MonoBehaviour
     private float bottomRight;
     private float bottomLeft;
     private float bottomHeight;
+    private bool isHit;
 
     // Start is called before the first frame update
     void Awake()
@@ -42,7 +43,17 @@ public class Enemy1Move : MonoBehaviour
         {
             speed = Mathf.Abs(speed);
             ///rbEnemy.velocity = new Vector2(1, rbEnemy.velocity.y);
+            ///OnTriggerEnter2D(Collider2D collision)
+        } else if (isHit == true)
+        {
+            rbEnemy.velocity = new Vector2(0, rbEnemy.velocity.y);
+
+            /// StartCoroutine(WaitAndAwake());
+            /// isHit = false;
+            Debug.Log("10f");
+          
         }
+
     }
 
     private bool checkGroundLeft()
@@ -65,11 +76,9 @@ public class Enemy1Move : MonoBehaviour
 
         
         Debug.DrawRay(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-        Debug.Log("left" + onGroundLeft.collider);
+       // Debug.Log("left" + onGroundLeft.collider);
 
         return onGroundLeft.collider != null;
-
-
     }
 
     private bool checkGroundRight()
@@ -91,7 +100,7 @@ public class Enemy1Move : MonoBehaviour
         }
 
         Debug.DrawRay(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-        Debug.Log("right" + onGroundRight.collider);
+        //Debug.Log("right" + onGroundRight.collider);
 
         return onGroundRight.collider != null;
     }
@@ -105,19 +114,24 @@ public class Enemy1Move : MonoBehaviour
 
         private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("collision!");
         if (collision.gameObject.layer == 8)
         {
-            Debug.Log("collision!");
+            Debug.Log("collision on layer 8!");
             rbEnemy.velocity = new Vector2(0, 0);
+            Debug.Log("velocity: " + rbEnemy.velocity);
             StartCoroutine(WaitAndAwake());
-            Debug.Log("awake!");
+            rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
+            isHit = true;
         }
     }
 
     IEnumerator WaitAndAwake()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(30f);
         Debug.Log("Awake!");
+        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
+        isHit = false;
     }
 }
 

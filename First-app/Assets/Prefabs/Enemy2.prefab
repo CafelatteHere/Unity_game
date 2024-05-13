@@ -163,5 +163,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  flipTime: 4.9
-  startPoint: {x: 7.4, y: -2.3}
+  boxSize: {x: 0, y: 0}
+  groundCheckDistance: 0
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
