@@ -35,6 +35,7 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log(collision);
         if (collision.gameObject.layer == 9)
         {
             ///transfer to another layer

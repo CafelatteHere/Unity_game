@@ -107,7 +107,7 @@ public class Enemy1Move : MonoBehaviour
     //    Gizmos.DrawLine(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), new Vector3(bottomRight, bottomHeight - groundCheckDistance, 0));
     //}
 
-    private void OnCollisionEnter2D (Collider2D collision)
+    private void OnCollisionEnter2D (Collision2D collision)
     {
         //better to use tags instead of layers if (collision CompareTage("Stone"))
 
