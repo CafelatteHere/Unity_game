@@ -37,19 +37,18 @@ public class Enemy1Move : MonoBehaviour
         if (checkGroundRight() == false)
         {
             speed = Mathf.Abs(speed) * -1;
-            //rbEnemy.velocity = new Vector2(-1, rbEnemy.velocity.y);
-        } else if (checkGroundLeft() == false)
+        }
+
+        else if (checkGroundLeft() == false)
         {
             speed = Mathf.Abs(speed);
-            ///rbEnemy.velocity = new Vector2(1, rbEnemy.velocity.y);
-            ///OnTriggerEnter2D(Collider2D collision)
-        } else if (isHit == true)
+        }
+        else if (isHit == true)
         {
             rbEnemy.velocity = new Vector2(0, rbEnemy.velocity.y);
 
             /// StartCoroutine(WaitAndAwake());
             /// isHit = false;
-            Debug.Log("10f");
           
         }
 
@@ -110,10 +109,21 @@ public class Enemy1Move : MonoBehaviour
     private void OnCollisionEnter2D (Collision2D collision)
     {
         //better to use tags instead of layers if (collision CompareTage("Stone"))
-
-            if (collision.gameObject.layer == 8)
+        Debug.Log(rbEnemy);
+        Debug.Log(gameObject.layer);
+        if (collision.gameObject.layer == 8 && gameObject.layer == 6)
         {
-            Debug.Log("collision on layer 8!");
+            StartCoroutine(HandleEnemyState());
+            isHit = true;
+            //Destroy(gameObject);
+        }
+        else if (collision.gameObject.layer == 8 && gameObject.layer == 7)
+        {
+            StartCoroutine(WaitAndAwake());
+            isHit = true;
+        }
+        else if (collision.gameObject.layer == 8 && gameObject.layer == 14)
+        {
             StartCoroutine(WaitAndAwake());
             isHit = true;
         }
@@ -129,12 +139,41 @@ public class Enemy1Move : MonoBehaviour
 
     public void TakeDamage(Collision2D collision)
     {
+        Debug.Log(rbEnemy);
+        Debug.Log(gameObject.layer);
         if (collision.gameObject.layer == 8)
         {
-            Debug.Log("collision on layer 8!");
             StartCoroutine(WaitAndAwake());
             isHit = true;
         }
+    }
+
+  
+    IEnumerator HandleEnemyState()
+    {
+
+        var timer = 3;
+        while (timer > 0)
+        {
+            Debug.Log(timer);
+            DeactivateEnemy();
+            yield return new WaitForSecondsRealtime(1);
+            ActivateEnemy();
+            yield return new WaitForSecondsRealtime(1);
+            timer--;
+        }
+    }
+    public void ActivateEnemy()
+    {
+        Debug.Log("activating");
+        Debug.Log(gameObject);
+        gameObject.SetActive(true);
+    }
+
+    public void DeactivateEnemy()
+    {
+        Debug.Log("deactivating");
+        gameObject.SetActive(false);
     }
 }
 
