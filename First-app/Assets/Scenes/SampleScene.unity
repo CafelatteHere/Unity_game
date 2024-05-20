@@ -486,6 +486,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas
       objectReference: {fileID: 0}
+    - target: {fileID: 1256298995789433923, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_TagString
+      value: GameController
+      objectReference: {fileID: 0}
     - target: {fileID: 1256298995789433927, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -670,12 +674,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 422240310965428638, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: totalThrows
-      value: 15
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 422240310965428638, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: objectToThrow
       value: 
-      objectReference: {fileID: 8416815510513723209, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
+      objectReference: {fileID: 6477061136557755901, guid: db12c9bcd6bf541c2a3ae4a18691eea1, type: 3}
     - target: {fileID: 422240310965428638, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: throwUpwardForce
       value: 2
@@ -745,6 +749,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8416815510503670538, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
+      propertyPath: LaunchSpeed.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416815510503670538, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
+      propertyPath: LaunchSpeed.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8416815510513723205, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
       propertyPath: m_Name
       value: Stone
@@ -792,6 +804,14 @@ PrefabInstance:
     - target: {fileID: 8416815510513723208, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416815510513723209, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
+      propertyPath: LaunchSpeed.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416815510513723209, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}
+      propertyPath: LaunchSpeed.y
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0c35a1ce98ca43e2b537581331d047d, type: 3}

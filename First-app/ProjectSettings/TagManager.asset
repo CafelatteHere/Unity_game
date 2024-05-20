@@ -15,10 +15,10 @@ TagManager:
   - Enemy2
   - ThrownObject
   - groundLayer
-  - 
-  - 
-  - 
-  - 
+  - Stone
+  - HitStone
+  - Enemy
+  - Ground
   - 
   - 
   - 

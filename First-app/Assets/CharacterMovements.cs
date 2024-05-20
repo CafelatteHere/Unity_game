@@ -9,6 +9,7 @@ public class CharacterMovements : MonoBehaviour
     private Vector2 direction;
     //we cat get it publicly but set only privately only in this script
     public int currentPlayerDirection { get; private set; } = 1;
+    private bool isFacingRight;
 
     // Start is called before the first frame update
     void Awake()
@@ -20,6 +21,7 @@ public class CharacterMovements : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         float horizontalDirection = Input.GetAxisRaw("Horizontal");
         float verticalDirection = Input.GetAxisRaw("Vertical");
 
@@ -27,11 +29,27 @@ public class CharacterMovements : MonoBehaviour
         {
             currentPlayerDirection = 1;
             transform.rotation = Quaternion.Euler(0, 0, 0);
+            isFacingRight = true;
         }
         else
         {
-            currentPlayerDirection = -1;
-            transform.rotation = Quaternion.Euler(0, 180, 0);
+            if (rb.velocity.x == 0 && isFacingRight == true)
+            {
+                
+                currentPlayerDirection = 1;
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            } else if (horizontalDirection < 0)
+            {
+                currentPlayerDirection = -1;
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+                isFacingRight = false;
+            }
+            else
+            {
+                currentPlayerDirection = -1;
+                transform.rotation = Quaternion.Euler(0, 180, 0);
+              
+            }
         }
 
         direction = new Vector2(horizontalDirection, verticalDirection);

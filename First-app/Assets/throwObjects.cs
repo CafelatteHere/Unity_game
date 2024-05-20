@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class throwObjects : MonoBehaviour
 {
-
-    //[SerializeField] private Rigidbody2D rb;
     [Header("Objects")]
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private StoneMovement objectToThrow;
@@ -15,9 +13,7 @@ public class throwObjects : MonoBehaviour
     [SerializeField] private int totalThrows;
     private KeyCode throwKey = KeyCode.T;
     private CharacterMovements player;
-    private StoneMovement stone;
-
-    //private var direction; - to check direction of character.
+    private Rigidbody2D rb;
 
     private void Awake()
     {
@@ -25,13 +21,13 @@ public class throwObjects : MonoBehaviour
         //characterMovements.direction = CharacterMovements.direction;
         //because those two scripts are attchd to same GameObject Player
         player = GetComponent<CharacterMovements>();
+        rb = GetComponent<Rigidbody2D>();
     }
-    // Start is called before the first frame update
+
     void Start()
     {
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(throwKey) && totalThrows > 0)
@@ -43,14 +39,11 @@ public class throwObjects : MonoBehaviour
 
     private void Throw()
     {
-
-        StoneMovement obj = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);
-        // Rigidbody2D objRb = obj.GetComponent<Rigidbody2D>();
-        var direction =new Vector2(player.currentPlayerDirection, 0);
-        Debug.Log("currentPlayerDirection= " + player.currentPlayerDirection);
+        StoneMovement stone = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);
+        var direction =new Vector2(player.currentPlayerDirection, 1);
+       
         stone.Launch(direction);
-        totalThrows--;
-        
+        totalThrows--;       
     }
 
         //read horiz inpu and vertical from oter file
@@ -64,5 +57,4 @@ public class throwObjects : MonoBehaviour
         //}
        // objRb.AddForce((Vector2.up + (3 * Vector2.right)) * throwForce, ForceMode2D.Impulse);
       
- 
 }

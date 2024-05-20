@@ -5,13 +5,12 @@ using UnityEngine;
 public class StoneMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
-    [SerializeField] private Vector2 LaunchSpeed = new Vector2(10, 5);
+    [SerializeField] private Vector2 LaunchSpeed;
     private float destructionTime = 2f;
 
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         //Destroy(gameObject, 3f); - we can do it too, but not using it becase in separate function we can set up some effects too;
         //invoke - to call smth after some time;
         Invoke(nameof(DestroyStone), destructionTime);
@@ -25,11 +24,28 @@ public class StoneMovement : MonoBehaviour
 
     public void Launch(Vector2 direction)
     {
-        rb.AddForce(LaunchSpeed, ForceMode2D.Impulse +20);
+        rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(LaunchSpeed * direction, ForceMode2D.Impulse);
     }
 
     private void DestroyStone()
     {
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 9)
+        {
+            ///transfer to another layer
+            gameObject.layer = LayerMask.NameToLayer("HitStone");
+            var enemy = collision.gameObject.GetComponent<Enemy1Move>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(collision);
+                ///transfer to another layer;
+                gameObject.layer = LayerMask.NameToLayer("HitStone");
+            }
+        }
     }
 }

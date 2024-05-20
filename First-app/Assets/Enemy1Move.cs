@@ -14,13 +14,13 @@ public class Enemy1Move : MonoBehaviour
     private float height;
     private float bottomRight;
     private float bottomLeft;
-    private float bottomHeight;
-    private bool isHit;
+    private bool isHit; 
 
     // Start is called before the first frame update
     void Awake()
     {
-        //Rigidbody2D rbEnemy1 makes it to be a new var 
+        //Rigidbody2D rbEnemy1 makes it to be a new var
+        ///better to use box collider
         rbEnemy = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
@@ -32,7 +32,6 @@ public class Enemy1Move : MonoBehaviour
     {
         bottomRight = transform.position.x + width / 2;
         bottomLeft = transform.position.x - width / 2;
-        bottomHeight = transform.position.y - height / 2;
 
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
         if (checkGroundRight() == false)
@@ -65,12 +64,10 @@ public class Enemy1Move : MonoBehaviour
 
         if (onGroundLeft.collider != null)
         {
-            Debug.Log("onGroundLeft.collider != null");
             color = Color.green;
         }
         else
         {
-            Debug.Log("onGroundLeft.collider = null");
             color = Color.red;
         }
 
@@ -90,12 +87,10 @@ public class Enemy1Move : MonoBehaviour
 
         if (onGroundRight.collider != null)
         {
-            Debug.Log("onGroundLeft.collider != null");
             color = Color.green;
         }
         else
         {
-            Debug.Log("onGroundLeft.collider = null");
             color = Color.red;
         }
 
@@ -112,16 +107,14 @@ public class Enemy1Move : MonoBehaviour
     //    Gizmos.DrawLine(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), new Vector3(bottomRight, bottomHeight - groundCheckDistance, 0));
     //}
 
-        private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D (Collider2D collision)
     {
-        Debug.Log("collision!");
-        if (collision.gameObject.layer == 8)
+        //better to use tags instead of layers if (collision CompareTage("Stone"))
+
+            if (collision.gameObject.layer == 8)
         {
             Debug.Log("collision on layer 8!");
-            rbEnemy.velocity = new Vector2(0, 0);
-            Debug.Log("velocity: " + rbEnemy.velocity);
             StartCoroutine(WaitAndAwake());
-            rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
             isHit = true;
         }
     }
@@ -132,6 +125,16 @@ public class Enemy1Move : MonoBehaviour
         Debug.Log("Awake!");
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
         isHit = false;
+    }
+
+    public void TakeDamage(Collision2D collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+            Debug.Log("collision on layer 8!");
+            StartCoroutine(WaitAndAwake());
+            isHit = true;
+        }
     }
 }
 
