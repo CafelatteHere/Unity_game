@@ -15,7 +15,10 @@ public class Enemy1Move : MonoBehaviour
     private float bottomRight;
     private float bottomLeft;
     private bool isHit; 
-
+    private Renderer enemyRenderer;
+    private Collider2D enemyCollider;
+    private Vector2 direction;
+    [SerializeField] float hitSpeed;
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,9 +27,28 @@ public class Enemy1Move : MonoBehaviour
         rbEnemy = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
+        enemyRenderer = gameObject.GetComponent<Renderer>();
+        enemyCollider = gameObject.GetComponent<Collider2D>();
         //rbEnemy.transform.position = startPoint;
     }
+    
+    private void Start()
+    {
+        if (enemyRenderer == null)
+        {
+            enemyRenderer = GetComponent<Renderer>();
+        }
 
+        if (enemyCollider == null)
+        {
+            enemyCollider = GetComponent<Collider2D>();
+        }
+
+        if (rbEnemy == null)
+        {
+            rbEnemy = GetComponent<Rigidbody2D>();
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -108,14 +130,16 @@ public class Enemy1Move : MonoBehaviour
 
     private void OnCollisionEnter2D (Collision2D collision)
     {
+            Debug.Log("Collision detected with object: " + collision.gameObject.name);
+    Debug.Log("Collision layer: " + collision.gameObject.layer);
+    Debug.Log("Enemy layer: " + gameObject.layer);
         //better to use tags instead of layers if (collision CompareTage("Stone"))
         Debug.Log(rbEnemy);
-        Debug.Log(gameObject.layer);
+
         if (collision.gameObject.layer == 8 && gameObject.layer == 6)
         {
             StartCoroutine(HandleEnemyState());
             isHit = true;
-            //Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 8 && gameObject.layer == 7)
         {
@@ -124,14 +148,24 @@ public class Enemy1Move : MonoBehaviour
         }
         else if (collision.gameObject.layer == 8 && gameObject.layer == 14)
         {
-            StartCoroutine(WaitAndAwake());
+            var stoneMovement = collision.gameObject.GetComponent<StoneMovement>();
+if (stoneMovement != null){
+            Debug.Log("collided with layer 14");
+            Debug.Log("StoneMovement component found.");
+            
+            direction = stoneMovement.stoneDirection;
+            Debug.Log("Direction obtained from stone: " + direction);
+       
+            rbEnemy.AddForce(hitSpeed * -direction, ForceMode2D.Impulse);
+            //StartCoroutine(WaitAndAwake());
             isHit = true;
+        }
         }
     }
 
     IEnumerator WaitAndAwake()
     {
-        yield return new WaitForSeconds(30f);
+        yield return new WaitForSeconds(10f);
         Debug.Log("Awake!");
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
         isHit = false;
@@ -146,34 +180,64 @@ public class Enemy1Move : MonoBehaviour
             StartCoroutine(WaitAndAwake());
             isHit = true;
         }
+         else
+        {
+            Debug.LogWarning("StoneMovement component not found on the colliding object.");
+        }
     }
 
   
     IEnumerator HandleEnemyState()
-    {
+    {    
+        enemyRenderer.enabled = false;
+         yield return new WaitForSecondsRealtime(0.2f);
+        enemyRenderer.enabled = true;
+        yield return new WaitForSecondsRealtime(0.2f);
+        enemyRenderer.enabled = false;
+        yield return new WaitForSecondsRealtime(0.2f);
+        enemyRenderer.enabled = true;
+        yield return new WaitForSecondsRealtime(0.2f);
+        enemyRenderer.enabled = false;
+        yield return new WaitForSecondsRealtime(0.2f);
+        enemyRenderer.enabled = true;
 
-        var timer = 3;
-        while (timer > 0)
-        {
-            Debug.Log(timer);
-            DeactivateEnemy();
-            yield return new WaitForSecondsRealtime(1);
-            ActivateEnemy();
-            yield return new WaitForSecondsRealtime(1);
-            timer--;
-        }
-    }
-    public void ActivateEnemy()
-    {
-        Debug.Log("activating");
-        Debug.Log(gameObject);
-        gameObject.SetActive(true);
-    }
+        Destroy(gameObject);   
+        Debug.Log("enemy is destroyed");
 
-    public void DeactivateEnemy()
-    {
-        Debug.Log("deactivating");
-        gameObject.SetActive(false);
+        // var timer = 3;
+        // while (timer > 0)
+        // {
+        //     Debug.Log(timer);
+        //     DeactivateEnemy();
+       //      yield return new WaitForSecondsRealtime(1);
+        //     ActivateEnemy();
+        //     yield return new WaitForSecondsRealtime(1);
+            
+        //     timer--;
+        // }
     }
+    // public void ActivateEnemy()
+    // {
+    //     Debug.Log("activating");
+    //     Debug.Log(gameObject);
+    //     if (enemyCollider != null) {
+    //         enemyCollider.enabled = true;
+    //         Debug.Log(enemyCollider.enabled = true);
+    //     }
+    //     if (enemyRenderer != null) {
+    //         enemyRenderer.enabled = true;
+    //          Debug.Log(enemyRenderer.enabled = true);
+    //     }
+    //     Debug.Log("while loop ended");
+    // }
+
+    // public void DeactivateEnemy()
+    // {
+    //     Debug.Log("deactivating");
+    //     enemyRenderer.enabled = false;
+    //     Debug.Log("renderer deactivated");
+    //     enemyCollider.enabled = false;
+    //   Debug.Log("collider deactivated");
+    // }
 }
 

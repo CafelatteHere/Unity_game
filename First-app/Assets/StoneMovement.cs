@@ -7,6 +7,7 @@ public class StoneMovement : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] private Vector2 LaunchSpeed;
     private float destructionTime = 2f;
+    public Vector2 stoneDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class StoneMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.AddForce(LaunchSpeed * direction, ForceMode2D.Impulse);
+        stoneDirection = direction;
     }
 
     private void DestroyStone()
