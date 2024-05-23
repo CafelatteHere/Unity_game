@@ -7,9 +7,10 @@ public class Enemy1Move : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private Vector2 hitSpeed;
+    [SerializeField] private LayerMask groundLayerMask;
 
     private Rigidbody2D rbEnemy;
-    [SerializeField] private LayerMask groundLayerMask;
     private float width;
     private float height;
     private float bottomRight;
@@ -18,7 +19,7 @@ public class Enemy1Move : MonoBehaviour
     private Renderer enemyRenderer;
     private Collider2D enemyCollider;
     private Vector2 direction;
-    [SerializeField] float hitSpeed;
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -148,18 +149,16 @@ public class Enemy1Move : MonoBehaviour
         }
         else if (collision.gameObject.layer == 8 && gameObject.layer == 14)
         {
+            rbEnemy = GetComponent<Rigidbody2D>();
+            Debug.Log(rbEnemy);
             var stoneMovement = collision.gameObject.GetComponent<StoneMovement>();
-if (stoneMovement != null){
-            Debug.Log("collided with layer 14");
-            Debug.Log("StoneMovement component found.");
-            
+           
             direction = stoneMovement.stoneDirection;
             Debug.Log("Direction obtained from stone: " + direction);
-       
-            rbEnemy.AddForce(hitSpeed * -direction, ForceMode2D.Impulse);
-            //StartCoroutine(WaitAndAwake());
-            isHit = true;
-        }
+            Debug.Log("hitspeed: " + hitSpeed);
+            rbEnemy.AddForce(hitSpeed * direction, ForceMode2D.Impulse);
+            TakeDamage(collision);
+     
         }
     }
 
@@ -173,16 +172,11 @@ if (stoneMovement != null){
 
     public void TakeDamage(Collision2D collision)
     {
-        Debug.Log(rbEnemy);
-        Debug.Log(gameObject.layer);
+        Debug.Log("executin line 177" + rbEnemy);
         if (collision.gameObject.layer == 8)
         {
             StartCoroutine(WaitAndAwake());
             isHit = true;
-        }
-         else
-        {
-            Debug.LogWarning("StoneMovement component not found on the colliding object.");
         }
     }
 
@@ -202,7 +196,7 @@ if (stoneMovement != null){
         enemyRenderer.enabled = true;
 
         Destroy(gameObject);   
-        Debug.Log("enemy is destroyed");
+
 
         // var timer = 3;
         // while (timer > 0)

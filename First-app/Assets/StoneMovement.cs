@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class StoneMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
+   
     [SerializeField] private Vector2 LaunchSpeed;
-    private float destructionTime = 2f;
+
     public Vector2 stoneDirection;
+
+    private Rigidbody2D rb;
+    private float destructionTime = 2f;
+    
 
     // Start is called before the first frame update
     void Start()
