@@ -5,19 +5,20 @@ using UnityEngine;
 public class CharacterMovements : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private float speed = 120;
-    [SerializeField] private float jumpPower =10;
+    [SerializeField] private float speed;
+    [SerializeField] private float jumpPower = 10;
 
     //we cat get it publicly but set only privately only in this script
     public int currentPlayerDirection { get; private set; } = 1;
     private bool isFacingRight;
     private Vector2 direction;
-    private bool isGrounded;
+    private bool isGrounded = true;
 
     // Start is called before the first frame update
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = 120;
     }
 
     // Update is called once per frame
@@ -25,8 +26,8 @@ public class CharacterMovements : MonoBehaviour
     {
        
         float horizontalDirection = Input.GetAxisRaw("Horizontal");
-        float verticalDirection = Input.GetAxisRaw("Jump") * jumpPower;
-
+        float verticalDirection = Input.GetAxisRaw("Vertical");
+        //float verticalDirection = Input.GetAxisRaw("Jump") * jumpPower;
         if (horizontalDirection > 0)
         {
             currentPlayerDirection = 1;
@@ -59,14 +60,15 @@ public class CharacterMovements : MonoBehaviour
 
     private void FixedUpdate()
     {
+        rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
         //TODO: make the character jump by one Up key press without need to press and hold the key
-        if isGrounded = true {
-            rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
-        } else
-        {
-            direction.y = 0;
-            rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
-        }
+        // if (isGrounded == true) {  
+        //     rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
+        // } else
+        // {
+        //     direction.y = 0;
+        //     rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y * (speed * 2) * Time.deltaTime);
+        // }
 
     }
 

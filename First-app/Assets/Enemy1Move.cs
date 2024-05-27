@@ -156,7 +156,8 @@ public class Enemy1Move : MonoBehaviour
             direction = stoneMovement.stoneDirection;
             Debug.Log("Direction obtained from stone: " + direction);
             Debug.Log("hitspeed: " + hitSpeed);
-            rbEnemy.AddForce(hitSpeed * direction, ForceMode2D.Impulse);
+            rbEnemy.velocity = new Vector2(0, 0);
+            rbEnemy.AddForce(hitSpeed  * direction, ForceMode2D.Impulse);
             TakeDamage(collision);
      
         }

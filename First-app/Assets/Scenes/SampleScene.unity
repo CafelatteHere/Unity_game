@@ -440,6 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1378978245}
   speed: 0
+  jumpPower: 10
 --- !u!1001 &1387635267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -767,7 +768,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410362, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: speed
-      value: 10
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410364, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_RootOrder
