@@ -24,7 +24,7 @@ public class StoneMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.Rotate(0, 0, 0.5f);
     }
 
     public void Launch(Vector2 direction)
@@ -41,7 +41,6 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision);
         if (collision.gameObject.layer == 9)
         {
             ///transfer to another layer
