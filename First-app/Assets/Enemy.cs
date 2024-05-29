@@ -2,24 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy1Move : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
-    [SerializeField] private Vector2 hitSpeed;
-    [SerializeField] private LayerMask groundLayerMask;
 
     private Rigidbody2D rbEnemy;
+    [SerializeField] private LayerMask groundLayerMask;
     private float width;
     private float height;
     private float bottomRight;
     private float bottomLeft;
     private bool isHit; 
-    private Renderer enemyRenderer;
+    private SpriteRenderer enemyRenderer;
     private Collider2D enemyCollider;
     private Vector2 direction;
-    
+    [SerializeField] float hitSpeed;
     // Start is called before the first frame update
     void Awake()
     {
@@ -131,6 +130,10 @@ public class Enemy1Move : MonoBehaviour
 
     private void OnCollisionEnter2D (Collision2D collision)
     {
+        var damageable = collision.gameObject.GetComponent<IDamageable>();
+        if (damageable != null) {
+            damageable.TakeDamage(stoneDirection);
+        }
             Debug.Log("Collision detected with object: " + collision.gameObject.name);
     Debug.Log("Collision layer: " + collision.gameObject.layer);
     Debug.Log("Enemy layer: " + gameObject.layer);
@@ -149,17 +152,18 @@ public class Enemy1Move : MonoBehaviour
         }
         else if (collision.gameObject.layer == 8 && gameObject.layer == 14)
         {
-            rbEnemy = GetComponent<Rigidbody2D>();
-            Debug.Log(rbEnemy);
             var stoneMovement = collision.gameObject.GetComponent<StoneMovement>();
-           
+if (stoneMovement != null){
+            Debug.Log("collided with layer 14");
+            Debug.Log("StoneMovement component found.");
+            
             direction = stoneMovement.stoneDirection;
             Debug.Log("Direction obtained from stone: " + direction);
-            Debug.Log("hitspeed: " + hitSpeed);
-            rbEnemy.velocity = new Vector2(0, 0);
-            rbEnemy.AddForce(hitSpeed  * direction, ForceMode2D.Impulse);
-            TakeDamage(collision);
-     
+       
+            rbEnemy.AddForce(hitSpeed * -direction, ForceMode2D.Impulse);
+            //StartCoroutine(WaitAndAwake());
+            isHit = true;
+        }
         }
     }
 
@@ -173,11 +177,16 @@ public class Enemy1Move : MonoBehaviour
 
     public void TakeDamage(Collision2D collision)
     {
-        Debug.Log("executin line 177" + rbEnemy);
+        Debug.Log(rbEnemy);
+        Debug.Log(gameObject.layer);
         if (collision.gameObject.layer == 8)
         {
             StartCoroutine(WaitAndAwake());
             isHit = true;
+        }
+         else
+        {
+            Debug.LogWarning("StoneMovement component not found on the colliding object.");
         }
     }
 
@@ -197,7 +206,7 @@ public class Enemy1Move : MonoBehaviour
         enemyRenderer.enabled = true;
 
         Destroy(gameObject);   
-
+        Debug.Log("enemy is destroyed");
 
         // var timer = 3;
         // while (timer > 0)
