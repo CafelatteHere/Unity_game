@@ -27,7 +27,7 @@ public class Enemy : MonoBehaviour
         rbEnemy = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
-        enemyRenderer = gameObject.GetComponent<Renderer>();
+        enemyRenderer = gameObject.GetComponent<SpriteRenderer>();
         enemyCollider = gameObject.GetComponent<Collider2D>();
         //rbEnemy.transform.position = startPoint;
     }
@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     {
         if (enemyRenderer == null)
         {
-            enemyRenderer = GetComponent<Renderer>();
+            enemyRenderer = GetComponent<SpriteRenderer>();
         }
 
         if (enemyCollider == null)
@@ -132,7 +132,8 @@ public class Enemy : MonoBehaviour
     {
         var damageable = collision.gameObject.GetComponent<IDamageable>();
         if (damageable != null) {
-            damageable.TakeDamage(stoneDirection);
+            ///deleted argument stoneDirection from here
+            damageable.TakeDamage();
         }
             Debug.Log("Collision detected with object: " + collision.gameObject.name);
     Debug.Log("Collision layer: " + collision.gameObject.layer);

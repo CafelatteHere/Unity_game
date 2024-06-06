@@ -41,11 +41,12 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        var enemy = collision.gameObject.GetComponent<Enemy>();
         if (collision.gameObject.layer == 9)
         {
             ///transfer to another layer
             gameObject.layer = LayerMask.NameToLayer("HitStone");
-            var enemy = collision.gameObject.GetComponent<Enemy1Move>();  
+            
             return;          
         }
         if (enemy != null)
