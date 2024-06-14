@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LaunchSpeed: {x: 6, y: 5}
+  stoneDirection: {x: 0, y: 0}
 --- !u!50 &6477061136557755902
 Rigidbody2D:
   serializedVersion: 4

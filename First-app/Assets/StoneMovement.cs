@@ -51,7 +51,8 @@ public class StoneMovement : MonoBehaviour
         }
         if (enemy != null)
             {
-                enemy.TakeDamage(collision);
+                var damageable = collision.gameObject.GetComponent<IDamageable>();
+                damageable.TakeDamage(collision);
                 ///transfer to another layer;
                 gameObject.layer = LayerMask.NameToLayer("HitStone");
             }

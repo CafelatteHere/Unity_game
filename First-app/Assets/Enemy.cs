@@ -4,22 +4,19 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed;
+    [SerializeField] public float speed;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
-
+    public bool isHit;
     private Rigidbody2D rbEnemy;
     [SerializeField] private LayerMask groundLayerMask;
     private float width;
     private float height;
     private float bottomRight;
     private float bottomLeft;
-    private bool isHit; 
-    private SpriteRenderer enemyRenderer;
     private Collider2D enemyCollider;
-    private Vector2 direction;
-    [SerializeField] float hitSpeed;
-    // Start is called before the first frame update
+
+
     void Awake()
     {
         //Rigidbody2D rbEnemy1 makes it to be a new var
@@ -27,35 +24,22 @@ public class Enemy : MonoBehaviour
         rbEnemy = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
         height = GetComponent<Renderer>().bounds.size.y;
-        enemyRenderer = gameObject.GetComponent<SpriteRenderer>();
+
         enemyCollider = gameObject.GetComponent<Collider2D>();
         //rbEnemy.transform.position = startPoint;
     }
-    
+
     private void Start()
     {
-        if (enemyRenderer == null)
-        {
-            enemyRenderer = GetComponent<SpriteRenderer>();
-        }
-
-        if (enemyCollider == null)
-        {
-            enemyCollider = GetComponent<Collider2D>();
-        }
-
-        if (rbEnemy == null)
-        {
-            rbEnemy = GetComponent<Rigidbody2D>();
-        }
+        isHit = false;
     }
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         bottomRight = transform.position.x + width / 2;
         bottomLeft = transform.position.x - width / 2;
 
-        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
+        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
         if (checkGroundRight() == false)
         {
             speed = Mathf.Abs(speed) * -1;
@@ -67,12 +51,10 @@ public class Enemy : MonoBehaviour
         }
         else if (isHit == true)
         {
-            rbEnemy.velocity = new Vector2(0, rbEnemy.velocity.y);
-
-            /// StartCoroutine(WaitAndAwake());
-            /// isHit = false;
-          
+            rbEnemy.velocity = Vector2.zero;
+            StartCoroutine(WaitAndAwake());
         }
+                    Debug.Log("isHit: " + isHit);  
 
     }
 
@@ -92,9 +74,9 @@ public class Enemy : MonoBehaviour
             color = Color.red;
         }
 
-        
+
         Debug.DrawRay(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-       // Debug.Log("left" + onGroundLeft.collider);
+        // Debug.Log("left" + onGroundLeft.collider);
 
         return onGroundLeft.collider != null;
     }
@@ -103,7 +85,7 @@ public class Enemy : MonoBehaviour
     {
         Color color = Color.green;
         float duration = 0.7f;
-        
+
         RaycastHit2D onGroundRight = Physics2D.Raycast(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
 
         if (onGroundRight.collider != null)
@@ -128,121 +110,27 @@ public class Enemy : MonoBehaviour
     //    Gizmos.DrawLine(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), new Vector3(bottomRight, bottomHeight - groundCheckDistance, 0));
     //}
 
-    private void OnCollisionEnter2D (Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        var damageable = collision.gameObject.GetComponent<IDamageable>();
-        if (damageable != null) {
-            ///deleted argument stoneDirection from here
-            damageable.TakeDamage();
-        }
-            Debug.Log("Collision detected with object: " + collision.gameObject.name);
-    Debug.Log("Collision layer: " + collision.gameObject.layer);
-    Debug.Log("Enemy layer: " + gameObject.layer);
-        //better to use tags instead of layers if (collision CompareTage("Stone"))
-        Debug.Log(rbEnemy);
+        IDamageable damageable = gameObject.GetComponent<IDamageable>();
+        //IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
 
-        if (collision.gameObject.layer == 8 && gameObject.layer == 6)
+        if (damageable != null && collision.gameObject.GetComponent<StoneMovement>() != null)
+        
         {
-            StartCoroutine(HandleEnemyState());
+            Debug.Log("on collision is executed");
             isHit = true;
-        }
-        else if (collision.gameObject.layer == 8 && gameObject.layer == 7)
-        {
-            StartCoroutine(WaitAndAwake());
-            isHit = true;
-        }
-        else if (collision.gameObject.layer == 8 && gameObject.layer == 14)
-        {
-            var stoneMovement = collision.gameObject.GetComponent<StoneMovement>();
-if (stoneMovement != null){
-            Debug.Log("collided with layer 14");
-            Debug.Log("StoneMovement component found.");
-            
-            direction = stoneMovement.stoneDirection;
-            Debug.Log("Direction obtained from stone: " + direction);
-       
-            rbEnemy.AddForce(hitSpeed * -direction, ForceMode2D.Impulse);
-            //StartCoroutine(WaitAndAwake());
-            isHit = true;
-        }
+            damageable.TakeDamage(collision);
         }
     }
 
     IEnumerator WaitAndAwake()
     {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(20f);
         Debug.Log("Awake!");
-        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);
         isHit = false;
+        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);    
     }
 
-    public void TakeDamage(Collision2D collision)
-    {
-        Debug.Log(rbEnemy);
-        Debug.Log(gameObject.layer);
-        if (collision.gameObject.layer == 8)
-        {
-            StartCoroutine(WaitAndAwake());
-            isHit = true;
-        }
-         else
-        {
-            Debug.LogWarning("StoneMovement component not found on the colliding object.");
-        }
-    }
-
-  
-    IEnumerator HandleEnemyState()
-    {    
-        enemyRenderer.enabled = false;
-         yield return new WaitForSecondsRealtime(0.2f);
-        enemyRenderer.enabled = true;
-        yield return new WaitForSecondsRealtime(0.2f);
-        enemyRenderer.enabled = false;
-        yield return new WaitForSecondsRealtime(0.2f);
-        enemyRenderer.enabled = true;
-        yield return new WaitForSecondsRealtime(0.2f);
-        enemyRenderer.enabled = false;
-        yield return new WaitForSecondsRealtime(0.2f);
-        enemyRenderer.enabled = true;
-
-        Destroy(gameObject);   
-        Debug.Log("enemy is destroyed");
-
-        // var timer = 3;
-        // while (timer > 0)
-        // {
-        //     Debug.Log(timer);
-        //     DeactivateEnemy();
-       //      yield return new WaitForSecondsRealtime(1);
-        //     ActivateEnemy();
-        //     yield return new WaitForSecondsRealtime(1);
-            
-        //     timer--;
-        // }
-    }
-    // public void ActivateEnemy()
-    // {
-    //     Debug.Log("activating");
-    //     Debug.Log(gameObject);
-    //     if (enemyCollider != null) {
-    //         enemyCollider.enabled = true;
-    //         Debug.Log(enemyCollider.enabled = true);
-    //     }
-    //     if (enemyRenderer != null) {
-    //         enemyRenderer.enabled = true;
-    //          Debug.Log(enemyRenderer.enabled = true);
-    //     }
-    //     Debug.Log("while loop ended");
-    // }
-
-    // public void DeactivateEnemy()
-    // {
-    //     Debug.Log("deactivating");
-    //     enemyRenderer.enabled = false;
-    //     Debug.Log("renderer deactivated");
-    //     enemyCollider.enabled = false;
-    //   Debug.Log("collider deactivated");
-    // }
 }
 
