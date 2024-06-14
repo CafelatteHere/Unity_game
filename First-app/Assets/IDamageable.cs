@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IDamageable 
 {
-    public void TakeDamage(Collision2D collision);    
+    public void TakeDamage(Vector2 direction);    
 }

@@ -6,7 +6,7 @@ public class StoneMovement : MonoBehaviour
 {
    
     [SerializeField] private Vector2 LaunchSpeed;
-
+    public Enemy enemy;
     public Vector2 stoneDirection;
 
     private Rigidbody2D rb;
@@ -41,20 +41,19 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var enemy = collision.gameObject.GetComponent<Enemy>();
-        if (collision.gameObject.layer == 9)
+        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        Vector2 direction = new Vector2(Mathf.Sign(stoneDirection.x), 1);
+        if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
         {
             ///transfer to another layer
             gameObject.layer = LayerMask.NameToLayer("HitStone");
             
             return;          
         }
-        if (enemy != null)
-            {
-                var damageable = collision.gameObject.GetComponent<IDamageable>();
-                damageable.TakeDamage(collision);
-                ///transfer to another layer;
-                gameObject.layer = LayerMask.NameToLayer("HitStone");
-            }
+        var damageable = collision.gameObject.GetComponent<IDamageable>();
+        enemy.isHit = true;
+        damageable.TakeDamage(stoneDirection);
+        ///transfer to another layer;
+        gameObject.layer = LayerMask.NameToLayer("HitStone");
     }
 }

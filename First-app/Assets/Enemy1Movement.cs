@@ -8,7 +8,7 @@ public class Enemy1Movement : MonoBehaviour, IDamageable
    
     private SpriteRenderer enemyRenderer;
 
-    public void TakeDamage(Collision2D collision)
+    public void TakeDamage(Vector2 direction)
     {
         Debug.Log("enemy1");
         StartCoroutine(HandleEnemyState());

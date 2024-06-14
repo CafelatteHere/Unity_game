@@ -440,7 +440,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1378978245}
   speed: 0
-  jumpPower: 20
+  jumpPower: 120
   bottomPosition: {fileID: 2032871834}
   checkRadius: 0.5
   groundLayerMask:
@@ -473,6 +473,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7266284296989440621, guid: b599465672b7c435cb5488d350738d4f, type: 3}
+      propertyPath: speed
+      value: -120
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266284296989440621, guid: b599465672b7c435cb5488d350738d4f, type: 3}
+      propertyPath: rbEnemy
+      value: 
+      objectReference: {fileID: 1387635271}
     - target: {fileID: 7266284296989440621, guid: b599465672b7c435cb5488d350738d4f, type: 3}
       propertyPath: hitSpeed
       value: 20
@@ -548,9 +556,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e84473042b054af98d16aaf8d4bd1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitSpeed: {x: 1000, y: 500}
-  speed: 1000
+  hitSpeed: {x: 5, y: 5}
+  speed: 300
   isHit: 0
+--- !u!50 &1387635271 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 2381936195982638115, guid: b599465672b7c435cb5488d350738d4f, type: 3}
+  m_PrefabInstance: {fileID: 1387635267}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1878886771 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2939655034962705949, guid: f17517ed3256c4f51b20cb38e0afe5e2, type: 3}
@@ -1016,8 +1029,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -2633939807370306362, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: speed
-      value: 3
+      value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: -2633939807370306362, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
+      propertyPath: rbEnemy
+      value: 
+      objectReference: {fileID: 8332057724777447761}
     - target: {fileID: -2633939807370306362, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: boxSize.x
       value: 1
@@ -1092,7 +1109,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663015, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
@@ -1116,6 +1133,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHit: 0
+--- !u!50 &8332057724777447761 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8332057726735663008, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
+  m_PrefabInstance: {fileID: 8332057724777447757}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8853100795378027449
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1173,8 +1195,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: speed
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
+      propertyPath: rbEnemy
+      value: 
+      objectReference: {fileID: 8853100795378027454}
     - target: {fileID: 8853100796921289108, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: boxSize.x
       value: 1.5
@@ -1231,6 +1257,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isHit: 0
+--- !u!50 &8853100795378027454 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8853100796921289109, guid: a068a10399e6c467a92c83619133301d, type: 3}
+  m_PrefabInstance: {fileID: 8853100795378027449}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8956758963978274460
 PrefabInstance:
   m_ObjectHideFlags: 0

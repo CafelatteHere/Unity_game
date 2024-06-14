@@ -8,13 +8,15 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
     public bool isHit;
-    private Rigidbody2D rbEnemy;
+    public Rigidbody2D rbEnemy;
     [SerializeField] private LayerMask groundLayerMask;
     private float width;
     private float height;
     private float bottomRight;
     private float bottomLeft;
     private Collider2D enemyCollider;
+
+    private bool canMove;
 
 
     void Awake()
@@ -32,6 +34,9 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         isHit = false;
+        canMove = true;
+        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y)* Time.deltaTime;
+  
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -39,23 +44,27 @@ public class Enemy : MonoBehaviour
         bottomRight = transform.position.x + width / 2;
         bottomLeft = transform.position.x - width / 2;
 
-        rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
-        if (checkGroundRight() == false)
-        {
-            speed = Mathf.Abs(speed) * -1;
-        }
-
-        else if (checkGroundLeft() == false)
-        {
-            speed = Mathf.Abs(speed);
-        }
-        else if (isHit == true)
-        {
-            rbEnemy.velocity = Vector2.zero;
+        if (isHit) {
+            isHit = false;
+            canMove = false;
+            //rbEnemy.velocity = Vector2.zero;
             StartCoroutine(WaitAndAwake());
-        }
-                    Debug.Log("isHit: " + isHit);  
+        } 
+        else if (canMove) {
+            //ßrbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
+            if (checkGroundRight() == false)
+            {
+                Debug.Log(checkGroundRight() + "right");
+                speed = Mathf.Abs(speed) * -1;
+            }
 
+            else if (checkGroundLeft() ==  false)
+            {
+                Debug.Log(checkGroundLeft() + "leftt");
+                speed = Mathf.Abs(speed);
+            }
+            rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
+        }
     }
 
     private bool checkGroundLeft()
@@ -64,7 +73,7 @@ public class Enemy : MonoBehaviour
         float duration = 0.7f;
 
         RaycastHit2D onGroundLeft = Physics2D.Raycast(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
-
+Debug.Log(onGroundLeft + "onGroundLeft");
         if (onGroundLeft.collider != null)
         {
             color = Color.green;
@@ -110,26 +119,14 @@ public class Enemy : MonoBehaviour
     //    Gizmos.DrawLine(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), new Vector3(bottomRight, bottomHeight - groundCheckDistance, 0));
     //}
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        IDamageable damageable = gameObject.GetComponent<IDamageable>();
-        //IDamageable damageable = collision.gameObject.GetComponent<IDamageable>();
-
-        if (damageable != null && collision.gameObject.GetComponent<StoneMovement>() != null)
-        
-        {
-            Debug.Log("on collision is executed");
-            isHit = true;
-            damageable.TakeDamage(collision);
-        }
-    }
 
     IEnumerator WaitAndAwake()
     {
-        yield return new WaitForSeconds(20f);
+        yield return new WaitForSeconds(5f);
         Debug.Log("Awake!");
         isHit = false;
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);    
+        canMove = true;
     }
 
 }
