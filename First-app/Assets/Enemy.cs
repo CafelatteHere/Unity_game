@@ -47,20 +47,18 @@ public class Enemy : MonoBehaviour
         if (isHit) {
             isHit = false;
             canMove = false;
-            //rbEnemy.velocity = Vector2.zero;
+            rbEnemy.velocity = Vector2.zero;
             StartCoroutine(WaitAndAwake());
         } 
         else if (canMove) {
             //ßrbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
             if (checkGroundRight() == false)
             {
-                Debug.Log(checkGroundRight() + "right");
                 speed = Mathf.Abs(speed) * -1;
             }
 
             else if (checkGroundLeft() ==  false)
             {
-                Debug.Log(checkGroundLeft() + "leftt");
                 speed = Mathf.Abs(speed);
             }
             rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
@@ -73,7 +71,6 @@ public class Enemy : MonoBehaviour
         float duration = 0.7f;
 
         RaycastHit2D onGroundLeft = Physics2D.Raycast(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
-Debug.Log(onGroundLeft + "onGroundLeft");
         if (onGroundLeft.collider != null)
         {
             color = Color.green;
@@ -85,7 +82,6 @@ Debug.Log(onGroundLeft + "onGroundLeft");
 
 
         Debug.DrawRay(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-        // Debug.Log("left" + onGroundLeft.collider);
 
         return onGroundLeft.collider != null;
     }
@@ -122,7 +118,9 @@ Debug.Log(onGroundLeft + "onGroundLeft");
 
     IEnumerator WaitAndAwake()
     {
+        Debug.Log("Started waiting!");
         yield return new WaitForSeconds(5f);
+       // rbEnemy.velocity = Vector2.zero;
         Debug.Log("Awake!");
         isHit = false;
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y);    

@@ -41,7 +41,6 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Enemy enemy = collision.gameObject.GetComponent<Enemy>();
         Vector2 direction = new Vector2(Mathf.Sign(stoneDirection.x), 1);
         if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
         {
@@ -50,9 +49,21 @@ public class StoneMovement : MonoBehaviour
             
             return;          
         }
+
+        Debug.Log("collided: " + collision.gameObject.name);
+        if (collision.gameObject.GetComponent<Enemy>() != null) {
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+            Debug.Log("enemy status: " + enemy);
+            Debug.Log("enemy.isHit status: " + enemy.isHit);
+            enemy.isHit = true;
+            Debug.Log("enemy.isHit status: " + enemy.isHit);
+        }
         var damageable = collision.gameObject.GetComponent<IDamageable>();
-        enemy.isHit = true;
-        damageable.TakeDamage(stoneDirection);
+        Debug.Log(collision.gameObject.name);
+        if (damageable is not null
+        ) {
+            damageable.TakeDamage(stoneDirection);
+        }
         ///transfer to another layer;
         gameObject.layer = LayerMask.NameToLayer("HitStone");
     }
