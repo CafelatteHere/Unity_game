@@ -607,10 +607,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1378978245}
-  speed: 0
+  speed: 8
   jumpPower: 10
-  jumpTime: 1
-  jumpTimeCounter: 1
+  jumpTime: 0.5
+  jumpTimeCounter: 0.5
   horizontalDirection: 0
   groundLayerMask:
     serializedVersion: 2
