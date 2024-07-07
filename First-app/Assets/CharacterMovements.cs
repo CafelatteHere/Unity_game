@@ -11,8 +11,7 @@ public class CharacterMovements : MonoBehaviour
     [SerializeField] float jumpTimeCounter;
     [SerializeField] float horizontalDirection;
       //we cat get it publicly but set only privately only in this script
-    
-    private Vector2 direction;
+
     private bool isFacingRight;
     private bool isGrounded;
     private bool isJumping;
@@ -25,7 +24,6 @@ public class CharacterMovements : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        speed = 120;
     }
 
     // Update is called once per frame
@@ -35,46 +33,37 @@ public class CharacterMovements : MonoBehaviour
         //verticalDirection = Input.GetAxisRaw("Vertical");
 
         shouldIFlip(horizontalDirection);
-        direction = new Vector2(horizontalDirection, rb.velocity.y);
+        //QQ2 why rb.velocity.y * gives immediate jump?
+        rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
+
         
         //TODO: make the character jump by one Up key press without need to press and hold the key
-         if (isGrounded  && (Input.GetKeyDown(KeyCode.UpArrow) )) 
+         if (isGrounded  && (Input.GetKeyDown(KeyCode.Space) )) 
         {
-            rb.velocity = new Vector2 (direction.x, jumpPower);
+            rb.velocity = new Vector2 (horizontalDirection, jumpPower);
             isJumping = true;
-           // isGrounded = false;
             jumpTimeCounter = jumpTime;
             
         }
 
-        if ((Input.GetKey(KeyCode.UpArrow)) && isJumping) {
-            if (jumpTimeCounter> 0) 
-            {
-                rb.velocity = new Vector2 (direction.x, jumpPower);
-                jumpTimeCounter = jumpTimeCounter  - Time.deltaTime;
-              //  isGrounded = false;
-                //isJumping = true;  
-            }     
-        } else  
-        {
+        if (Input.GetKey(KeyCode.Space) && isJumping && (jumpTimeCounter > 0)) {
+            rb.velocity = new Vector2 (horizontalDirection, jumpPower);
+            jumpTimeCounter = jumpTimeCounter  - Time.deltaTime;     
+        } 
+
+        if (Input.GetKeyUp(KeyCode.Space)) {
             isJumping = false;
         }
-
-        if (Input.GetKeyUp(KeyCode.UpArrow)) {
-            isJumping = false;
-        }
+        
     }
 
-  private void FixedUpdate()
-    {
-        rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y);      
-    }
 
     void shouldIFlip(float horizontalDirection) {
 
 
         if (horizontalDirection > 0 && currentPlayerDirection < 0)
         {
+            //QQ1 why order matters?
             Flip();
             isFacingRight = true;
         }
@@ -84,11 +73,10 @@ public class CharacterMovements : MonoBehaviour
             {
                 
                 currentPlayerDirection = 1;
-               // transform.rotation = Quaternion.Euler(0, 0, 0);
-            } else if (horizontalDirection < 0 && currentPlayerDirection > 0)
+            } 
+            else if (horizontalDirection < 0 && currentPlayerDirection > 0)
             {
                 Flip();
-               // transform.rotation = Quaternion.Euler(0, 180, 0);
                 isFacingRight = false;
             }
             else
