@@ -11,7 +11,8 @@ public class CharacterMovements : MonoBehaviour
     [SerializeField] float jumpTimeCounter;
     [SerializeField] float horizontalDirection;
       //we cat get it publicly but set only privately only in this script
-
+    
+    private Vector2 direction;
     private bool isFacingRight;
     private bool isGrounded;
     private bool isJumping;
@@ -24,6 +25,7 @@ public class CharacterMovements : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        speed = 120;
     }
 
     // Update is called once per frame
@@ -33,29 +35,40 @@ public class CharacterMovements : MonoBehaviour
         //verticalDirection = Input.GetAxisRaw("Vertical");
 
         shouldIFlip(horizontalDirection);
-        rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
-
+        direction = new Vector2(horizontalDirection, rb.velocity.y);
         
         //TODO: make the character jump by one Up key press without need to press and hold the key
-         if (isGrounded  && (Input.GetKeyDown(KeyCode.Space) )) 
+         if (isGrounded  && (Input.GetKeyDown(KeyCode.UpArrow) )) 
         {
-            rb.velocity = new Vector2 (horizontalDirection, jumpPower);
+            rb.velocity = new Vector2 (direction.x, jumpPower);
             isJumping = true;
+           // isGrounded = false;
             jumpTimeCounter = jumpTime;
             
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumping && (jumpTimeCounter > 0)) {
-            rb.velocity = new Vector2 (horizontalDirection, jumpPower);
-            jumpTimeCounter = jumpTimeCounter  - Time.deltaTime;     
-        } 
-
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        if ((Input.GetKey(KeyCode.UpArrow)) && isJumping) {
+            if (jumpTimeCounter> 0) 
+            {
+                rb.velocity = new Vector2 (direction.x, jumpPower);
+                jumpTimeCounter = jumpTimeCounter  - Time.deltaTime;
+              //  isGrounded = false;
+                //isJumping = true;  
+            }     
+        } else  
+        {
             isJumping = false;
         }
-        
+
+        if (Input.GetKeyUp(KeyCode.UpArrow)) {
+            isJumping = false;
+        }
     }
 
+  private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(direction.x * speed * Time.deltaTime, direction.y);      
+    }
 
     void shouldIFlip(float horizontalDirection) {
 
