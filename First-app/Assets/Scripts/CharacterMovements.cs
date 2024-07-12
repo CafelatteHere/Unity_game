@@ -35,7 +35,6 @@ public class CharacterMovements : MonoBehaviour
         shouldIFlip(horizontalDirection);
         //QQ2 why rb.velocity.y * gives immediate jump?
         rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
-
         
         //TODO: make the character jump by one Up key press without need to press and hold the key
          if (isGrounded  && (Input.GetKeyDown(KeyCode.Space) )) 
@@ -57,15 +56,13 @@ public class CharacterMovements : MonoBehaviour
         
     }
 
-
     void shouldIFlip(float horizontalDirection) {
-
 
         if (horizontalDirection > 0 && currentPlayerDirection < 0)
         {
-            //QQ1 why order matters?
+            //QQ1 why order matters? Why is isFacingRight = true; not working?
             Flip();
-            isFacingRight = true;
+            // isFacingRight = true;
         }
         else
         {
@@ -77,12 +74,11 @@ public class CharacterMovements : MonoBehaviour
             else if (horizontalDirection < 0 && currentPlayerDirection > 0)
             {
                 Flip();
-                isFacingRight = false;
             }
-            else
+            else if  (rb.velocity.x == 0 && isFacingRight == false)
             {
             //    Flip();   
-            //    currentPlayerDirection = -1;                
+               currentPlayerDirection = -1;                
             }
         }
     }
@@ -90,22 +86,19 @@ public class CharacterMovements : MonoBehaviour
     void Flip () {
         transform.Rotate(0f, 180f, 0f);
         currentPlayerDirection *= - 1;
+        isFacingRight = !isFacingRight;
     }
 void OnCollisionEnter2D(Collision2D collision) {
     if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer")) {
         isGrounded = true;
         isJumping = false;
-        Debug.Log("I am grounded");
     }
-
 }
 
 void OnCollisionExit2D(Collision2D collision) {
     if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer")) {
         isGrounded = false;
-        Debug.Log("I am not grounded anymore");
     }
-
 }
   
 

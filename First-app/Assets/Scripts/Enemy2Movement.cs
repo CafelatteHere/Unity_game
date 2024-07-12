@@ -2,15 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy2Movement : MonoBehaviour, IDamageable
+public class Enemy2Movement : EnemyTakeDamage
 {   
-    public bool isHit;
-    private Rigidbody2D rbEnemy;
     
     
      void Awake()
     {
-        rbEnemy = GetComponent<Rigidbody2D>(); 
 
     }
         void Start()
@@ -18,7 +15,11 @@ public class Enemy2Movement : MonoBehaviour, IDamageable
 
     }
 
-   public void TakeDamage(Vector2 direction)
+//    public  void startTakeDamage(Vector2 direction){
+//         TakeDamage(direction);
+//     }
+
+     public override void TakeDamage(Vector2 direction)
     {
         Debug.Log("enemy2");
     }

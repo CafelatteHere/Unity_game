@@ -65,6 +65,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
+// can use only "abstract" (absolutly nothing inside the abstract function) or "virtual" (some code can be inside) for the function that is allowed to be overwritten
+// if trying to make protected this function (public in interface), the is an error "cannot change access modifiers when overriding 'protected' inherited member 'Enemy.TakeDamage(Vector2)'"
+    // public virtual void TakeDamage(Vector2 direction) {
+    //     Debug.Log("Base Enemy class, take damage");
+    // }
+
     private bool checkGroundLeft()
     {
         Color color = Color.green;

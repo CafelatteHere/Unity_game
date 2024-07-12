@@ -2,22 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy3Movement : MonoBehaviour, IDamageable
+public class Enemy3Movement : EnemyTakeDamage
 {
-    [SerializeField] private Vector2 hitSpeed;    
-    [SerializeField] private float speed;
+    [SerializeField] private Vector2 hitSpeed; 
+       
  
-    private Rigidbody2D rbEnemy;
 
     void Awake()
     {
-        rbEnemy = GetComponent<Rigidbody2D>(); 
        // isHit = GetComponent<Enemy>().isHit;
     }
+    // public  void startTakeDamage(Vector2 direction){
+    //     TakeDamage(direction);
+    // }
 
-    public void TakeDamage(Vector2 direction)
+     public override void TakeDamage(Vector2 direction)
     {   
+        Debug.Log("Enemy3Movement method works");
         rbEnemy.AddForce(hitSpeed * direction, ForceMode2D.Impulse);
+        Debug.Log("Enemy3Movement added force?");
     }
 
     

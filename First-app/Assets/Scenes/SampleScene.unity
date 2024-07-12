@@ -607,8 +607,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1378978245}
-  speed: 0
-  jumpPower: 10
+  speed: 8
+  jumpPower: 8
   jumpTime: 1
   jumpTimeCounter: 1
   horizontalDirection: 0
@@ -725,8 +725,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e84473042b054af98d16aaf8d4bd1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbEnemy: {fileID: 1387635271}
   hitSpeed: {x: 5, y: 5}
-  speed: 300
 --- !u!50 &1387635271 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 2381936195982638115, guid: b599465672b7c435cb5488d350738d4f, type: 3}
@@ -1312,7 +1312,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af6962ad4f1664e24a305f4cac84d0e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHit: 0
+  rbEnemy: {fileID: 0}
 --- !u!50 &8332057724777447761 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 8332057726735663008, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
@@ -1440,7 +1440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132e76687414d4516ac57cdd24dbd44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isHit: 0
+  rbEnemy: {fileID: 0}
+  enemyRenderer: {fileID: 0}
 --- !u!50 &8853100795378027454 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 8853100796921289109, guid: a068a10399e6c467a92c83619133301d, type: 3}
