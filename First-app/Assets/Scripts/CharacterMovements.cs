@@ -32,7 +32,7 @@ public class CharacterMovements : MonoBehaviour
         horizontalDirection = Input.GetAxis("Horizontal");
         //verticalDirection = Input.GetAxisRaw("Vertical");
 
-        shouldIFlip(horizontalDirection);
+        ShouldIFlip(horizontalDirection);
         //QQ2 why rb.velocity.y * gives immediate jump?
         rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
         
@@ -56,7 +56,7 @@ public class CharacterMovements : MonoBehaviour
         
     }
 
-    void shouldIFlip(float horizontalDirection) {
+    void ShouldIFlip(float horizontalDirection) {
 
         if (horizontalDirection > 0 && currentPlayerDirection < 0)
         {
