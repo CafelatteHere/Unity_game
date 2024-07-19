@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] public float speed;
     [SerializeField] private Vector2 boxSize;
@@ -13,7 +13,7 @@ public class Enemy : MonoBehaviour
     private float width;
     private float height;
     private float bottomRight;
-    private float bottomLeft;
+    protected float bottomLeft;
     private Collider2D enemyCollider;
 
     private bool canMove;
@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour
         //rbEnemy.transform.position = startPoint;
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         isHit = false;
         canMove = true;
@@ -54,11 +54,13 @@ public class Enemy : MonoBehaviour
             //ßrbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
             if (checkGroundRight() == false)
             {
+                 Debug.Log("right" + checkGroundRight());
                 speed = Mathf.Abs(speed) * -1;
             }
 
             else if (checkGroundLeft() ==  false)
             {
+                Debug.Log("left" + checkGroundLeft());
                 speed = Mathf.Abs(speed);
             }
             rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
@@ -71,10 +73,13 @@ public class Enemy : MonoBehaviour
     //     Debug.Log("Base Enemy class, take damage");
     // }
 
+   public virtual void TakeDamage(Vector2 direction) {
+        Debug.Log("Base Enemy class, take damage");
+    }
     private bool checkGroundLeft()
     {
         Color color = Color.green;
-        float duration = 0.7f;
+        float duration = 1f;
 
         RaycastHit2D onGroundLeft = Physics2D.Raycast(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
         if (onGroundLeft.collider != null)
@@ -88,14 +93,14 @@ public class Enemy : MonoBehaviour
 
 
         Debug.DrawRay(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-
+        Debug.Log( onGroundLeft.collider);
         return onGroundLeft.collider != null;
     }
 
     private bool checkGroundRight()
     {
         Color color = Color.green;
-        float duration = 0.7f;
+        float duration = 1f;
 
         RaycastHit2D onGroundRight = Physics2D.Raycast(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
 

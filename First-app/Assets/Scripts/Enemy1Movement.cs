@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy1Movement : EnemyTakeDamage
+public class Enemy1Movement : Enemy
 {
    
     [SerializeField] SpriteRenderer enemyRenderer;
@@ -14,6 +14,7 @@ public class Enemy1Movement : EnemyTakeDamage
     // Start is called before the first frame update
     void Start()
     {
+        base.Start();
         enemyRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -33,6 +34,7 @@ public class Enemy1Movement : EnemyTakeDamage
             yield return new WaitForSecondsRealtime(0.2f);
             enemyRenderer.enabled = true;
                 Debug.Log("enemyRenderer 2" + enemyRenderer);
+                Debug.Log(bottomLeft);
             yield return new WaitForSecondsRealtime(0.2f);
             Debug.Log(i);
             i ++;
