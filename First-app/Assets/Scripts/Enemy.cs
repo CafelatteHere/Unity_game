@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] public float speed;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
-    public bool isHit;
+    protected bool isHit;
+    protected bool isThrownBack;
     public Rigidbody2D rbEnemy;
     [SerializeField] private LayerMask groundLayerMask;
     private float width;
@@ -47,20 +48,21 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isHit) {
             isHit = false;
             canMove = false;
-            rbEnemy.velocity = Vector2.zero;
+            if (!isThrownBack) {
+                rbEnemy.velocity = Vector2.zero;
+            }
+            
             StartCoroutine(WaitAndAwake());
         } 
         else if (canMove) {
             //ßrbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
             if (checkGroundRight() == false)
             {
-                 Debug.Log("right" + checkGroundRight());
                 speed = Mathf.Abs(speed) * -1;
             }
 
             else if (checkGroundLeft() ==  false)
             {
-                Debug.Log("left" + checkGroundLeft());
                 speed = Mathf.Abs(speed);
             }
             rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
@@ -69,19 +71,19 @@ public class Enemy : MonoBehaviour, IDamageable
 
 // can use only "abstract" (absolutly nothing inside the abstract function) or "virtual" (some code can be inside) for the function that is allowed to be overwritten
 // if trying to make protected this function (public in interface), the is an error "cannot change access modifiers when overriding 'protected' inherited member 'Enemy.TakeDamage(Vector2)'"
-    // public virtual void TakeDamage(Vector2 direction) {
-    //     Debug.Log("Base Enemy class, take damage");
-    // }
 
-   public virtual void TakeDamage(Vector2 direction) {
+   public virtual void TakeDamage(Vector2 direction) 
+   {
+        isHit = true;
         Debug.Log("Base Enemy class, take damage");
+         Debug.Log("is hit? " + isHit);
     }
     private bool checkGroundLeft()
     {
         Color color = Color.green;
-        float duration = 1f;
+        float rayLength = 1.3f;
 
-        RaycastHit2D onGroundLeft = Physics2D.Raycast(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
+        RaycastHit2D onGroundLeft = Physics2D.Raycast(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down, rayLength, groundLayerMask);
         if (onGroundLeft.collider != null)
         {
             color = Color.green;
@@ -92,17 +94,16 @@ public class Enemy : MonoBehaviour, IDamageable
         }
 
 
-        Debug.DrawRay(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-        Debug.Log( onGroundLeft.collider);
+        Debug.DrawRay(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), Vector2.down * rayLength, color);
         return onGroundLeft.collider != null;
     }
 
     private bool checkGroundRight()
     {
         Color color = Color.green;
-        float duration = 1f;
+        float rayLength = 1.3f;
 
-        RaycastHit2D onGroundRight = Physics2D.Raycast(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down, duration, groundLayerMask);
+        RaycastHit2D onGroundRight = Physics2D.Raycast(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down, rayLength, groundLayerMask);
 
         if (onGroundRight.collider != null)
         {
@@ -113,8 +114,7 @@ public class Enemy : MonoBehaviour, IDamageable
             color = Color.red;
         }
 
-        Debug.DrawRay(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down * duration, color);
-        //Debug.Log("right" + onGroundRight.collider);
+        Debug.DrawRay(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), Vector2.down * rayLength, color);
 
         return onGroundRight.collider != null;
     }

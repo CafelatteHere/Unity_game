@@ -41,7 +41,6 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision detected with: " + collision.gameObject.name);
         
         Vector2 direction = new Vector2(Mathf.Sign(stoneDirection.x), 1);
         if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
@@ -52,26 +51,16 @@ public class StoneMovement : MonoBehaviour
             return;          
         }
 
-        if (collision.gameObject.GetComponent<Enemy>() != null) {
-            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.isHit = true;
-        }
+        // if (collision.gameObject.GetComponent<Enemy>() != null) {
+        //     Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+        //     enemy.isHit = true;
+        // }
 
        
         var damageable = collision.gameObject.GetComponent<IDamageable>();
- if (damageable is Enemy1Movement)
-            {
-                Debug.Log("The object is of type Enemy1Movement.");
-            }
-            else
-            {
-                Debug.Log("The object is not of type Enemy1Movement."); 
-                Debug.Log("The actual type is: " + damageable.GetType().Name);
-            }
 
-        if (damageable is not null
-        ) {
-            Debug.Log("IDamageable component found.");
+        if (damageable is not null) 
+        {
             damageable.TakeDamage(stoneDirection);
         }
         ///transfer to another layer;

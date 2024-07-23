@@ -12,7 +12,7 @@ public class Enemy1Movement : Enemy
     }
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         base.Start();
         enemyRenderer = GetComponent<SpriteRenderer>();
@@ -20,6 +20,7 @@ public class Enemy1Movement : Enemy
 
     public override void TakeDamage(Vector2 direction)
     {
+        base.TakeDamage(direction);
         Debug.Log("enemy1 is doing its own take damage method");
         StartCoroutine(HandleEnemyState());
         //base.isHit = true;
