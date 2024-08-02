@@ -76,7 +76,6 @@ public class Enemy : MonoBehaviour, IDamageable
    {
         isHit = true;
         Debug.Log("Base Enemy class, take damage");
-         Debug.Log("is hit? " + isHit);
     }
     private bool checkGroundLeft()
     {

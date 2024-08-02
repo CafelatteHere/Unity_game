@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
 
 public class CharacterMovements : MonoBehaviour
 {
@@ -19,11 +21,18 @@ public class CharacterMovements : MonoBehaviour
     
     public int currentPlayerDirection { get; private set; } = 1;
     public LayerMask groundLayerMask;
+   [SerializeField] UnityEvent liveCountDecrease;
 
     // Start is called before the first frame update
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); 
+    }
+
+    void Start() {
+        if (liveCountDecrease == null) {
+            liveCountDecrease = new UnityEvent();
+        }
     }
 
     // Update is called once per frame
@@ -93,13 +102,20 @@ void OnCollisionEnter2D(Collision2D collision) {
         isGrounded = true;
         isJumping = false;
     }
+    else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
+        Debug.Log("collided with enemy");
+        //liveCountDecrease.AddListener(DecreaseLive);
+        //liveCountDecrease.AddListener(UpdateLivesCountText);
+        liveCountDecrease.Invoke();
+    }
 }
-
+private void TestMethod(){
+    Debug.Log("test method invoked");
+}
 void OnCollisionExit2D(Collision2D collision) {
     if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer")) {
         isGrounded = false;
     }
 }
-  
 
 }
