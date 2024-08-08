@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -8,11 +6,10 @@ public class UIController : MonoBehaviour
     [SerializeField] TextMeshProUGUI livesText;
     GameController gameController;
     bool isGameOver;
-    // Start is called before the first frame update
+
     void Start()
     {
         gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>(); 
-
         livesText.text = "Health: " + gameController.currentHealth;
     }
 

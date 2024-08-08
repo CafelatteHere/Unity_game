@@ -1,14 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class GameController : MonoBehaviour
 {
     [SerializeField] public int currentHealth;
     [SerializeField] int maxHealth;
-    //  [SerializeField] int damage;
     public static event Action GameEnd;
     
 
@@ -16,7 +12,6 @@ public class GameController : MonoBehaviour
     {
         currentHealth = maxHealth;
     }
-
 
     private void OnEnable()
     {

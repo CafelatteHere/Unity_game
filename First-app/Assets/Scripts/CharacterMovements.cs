@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 
 public class CharacterMovements : MonoBehaviour
@@ -12,27 +9,23 @@ public class CharacterMovements : MonoBehaviour
     [SerializeField] float jumpTime;
     [SerializeField] float jumpTimeCounter;
     [SerializeField] float horizontalDirection;
-      //we cat get it publicly but set only privately only in this script
 
     private bool isFacingRight;
     private bool isGrounded;
     private bool isJumping;
     private bool isAlive;
-    private float  verticalDirection;
-    
+
+    //we cat get it publicly but set only privately only in this script
     public int currentPlayerDirection { get; private set; } = 1;
     public LayerMask groundLayerMask;
    
 
-    // Start is called before the first frame update
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         isAlive = true;
     }
 
-
-    // Update is called once per frame
     void Update()
     {
         if (isAlive)
@@ -71,9 +64,7 @@ public class CharacterMovements : MonoBehaviour
 
         if (horizontalDirection > 0 && currentPlayerDirection < 0)
         {
-            //QQ1 why order matters? Why is isFacingRight = true; not working?
             Flip();
-            // isFacingRight = true;
         }
         else
         {
@@ -88,7 +79,6 @@ public class CharacterMovements : MonoBehaviour
             }
             else if  (rb.velocity.x == 0 && isFacingRight == false)
             {
-            //    Flip();   
                currentPlayerDirection = -1;                
             }
         }
@@ -125,9 +115,9 @@ void OnCollisionEnter2D(Collision2D collision) {
     }
 
 void OnCollisionExit2D(Collision2D collision) {
-    if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer")) {
+    if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
+        {
         isGrounded = false;
+        }
     }
-}
-
 }

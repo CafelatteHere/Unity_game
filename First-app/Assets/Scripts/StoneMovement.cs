@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StoneMovement : MonoBehaviour
@@ -12,8 +10,6 @@ public class StoneMovement : MonoBehaviour
     private Rigidbody2D rb;
     private float destructionTime = 2f;
     
-
-    // Start is called before the first frame update
     void Start()
     {
         //Destroy(gameObject, 3f); - we can do it too, but not using it becase in separate function we can set up some effects too;
@@ -21,7 +17,6 @@ public class StoneMovement : MonoBehaviour
         Invoke(nameof(DestroyStone), destructionTime);
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Rotate(0, 0, 0.5f);
@@ -50,12 +45,6 @@ public class StoneMovement : MonoBehaviour
             
             return;          
         }
-
-        // if (collision.gameObject.GetComponent<Enemy>() != null) {
-        //     Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-        //     enemy.isHit = true;
-        // }
-
        
         var damageable = collision.gameObject.GetComponent<IDamageable>();
 

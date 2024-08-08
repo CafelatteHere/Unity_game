@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class throwObjects : MonoBehaviour
@@ -24,9 +22,6 @@ public class throwObjects : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Start()
-    {
-    }
 
     void Update()
     {
@@ -45,16 +40,4 @@ public class throwObjects : MonoBehaviour
         stone.Launch(direction);
         totalThrows--;       
     }
-
-        //read horiz inpu and vertical from oter file
-        //if (characterRb.velocity.x >= 0)
-        //{
-        //    objRb.AddForce((Vector2.up + Vector2.right) * throwForce, ForceMode2D.Impulse);
-        //}
-        //else if (characterRb.velocity.x < 0)
-        //{
-        //    objRb.AddForce((Vector2.up + Vector2.left) * throwForce, ForceMode2D.Impulse);
-        //}
-       // objRb.AddForce((Vector2.up + (3 * Vector2.right)) * throwForce, ForceMode2D.Impulse);
-      
 }
