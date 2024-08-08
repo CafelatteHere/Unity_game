@@ -6,24 +6,40 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI livesText;
-    CharacterStates gameController;
+    GameController gameController;
+    bool isGameOver;
     // Start is called before the first frame update
     void Start()
     {
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<CharacterStates>();
-        Debug.Log(gameController);
+        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>(); 
 
-        livesText.text = "Lives: " + gameController.livesCount;
-        Debug.Log(livesText);
+        livesText.text = "Health: " + gameController.currentHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+
+    private void OnEnable()
     {
-        
+        Enemy.LiveCountDecrease += UpdateLivesCountText;
+        GameController.GameEnd += OnGameOver;
     }
 
-    public void UpdateLivesCountText(){
-        livesText.text = "Lives: " + gameController.livesCount;
+    private void OnDisable()
+    {
+        Enemy.LiveCountDecrease -= UpdateLivesCountText;
+        GameController.GameEnd -= OnGameOver;
+    }
+
+    public void OnGameOver()
+    {
+        isGameOver = true;
+        livesText.text = "Game over!\n Health: " + gameController.currentHealth;
+    }
+
+    public void UpdateLivesCountText(int damage){
+        if (!isGameOver)
+        {
+            livesText.text = "Health: " + gameController.currentHealth;
+            Debug.Log("UpdateLivesCountText updated the text");
+        } 
     }
 }

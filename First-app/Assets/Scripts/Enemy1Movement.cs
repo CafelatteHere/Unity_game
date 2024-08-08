@@ -40,7 +40,7 @@ public class Enemy1Movement : Enemy
             Debug.Log(i);
             i ++;
         }
-
+ 
         Destroy(gameObject);   
         Debug.Log("enemy is destroyed");
     }

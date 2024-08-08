@@ -17,41 +17,43 @@ public class CharacterMovements : MonoBehaviour
     private bool isFacingRight;
     private bool isGrounded;
     private bool isJumping;
+    private bool isAlive;
     private float  verticalDirection;
     
     public int currentPlayerDirection { get; private set; } = 1;
     public LayerMask groundLayerMask;
-   [SerializeField] UnityEvent liveCountDecrease;
+   
 
     // Start is called before the first frame update
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>(); 
+        rb = GetComponent<Rigidbody2D>();
+        isAlive = true;
     }
 
-    void Start() {
-        if (liveCountDecrease == null) {
-            liveCountDecrease = new UnityEvent();
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalDirection = Input.GetAxis("Horizontal");
-        //verticalDirection = Input.GetAxisRaw("Vertical");
-
+        if (isAlive)
+        {
+            horizontalDirection = Input.GetAxis("Horizontal");
+        }
+        else
+        {
+            horizontalDirection = 0;
+        }
+        
+      
         ShouldIFlip(horizontalDirection);
-        //QQ2 why rb.velocity.y * gives immediate jump?
         rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
         
-        //TODO: make the character jump by one Up key press without need to press and hold the key
+      
          if (isGrounded  && (Input.GetKeyDown(KeyCode.Space) )) 
         {
             rb.velocity = new Vector2 (horizontalDirection, jumpPower);
             isJumping = true;
             jumpTimeCounter = jumpTime;
-            
         }
 
         if (Input.GetKey(KeyCode.Space) && isJumping && (jumpTimeCounter > 0)) {
@@ -98,20 +100,30 @@ public class CharacterMovements : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 void OnCollisionEnter2D(Collision2D collision) {
-    if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer")) {
+    if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
+        {
         isGrounded = true;
         isJumping = false;
+        }
     }
-    else if (collision.gameObject.layer == LayerMask.NameToLayer("Enemy")) {
-        Debug.Log("collided with enemy");
-        //liveCountDecrease.AddListener(DecreaseLive);
-        //liveCountDecrease.AddListener(UpdateLivesCountText);
-        liveCountDecrease.Invoke();
+
+    private void OnEnable()
+    {
+        GameController.GameEnd += OnGameOver;
     }
-}
-private void TestMethod(){
-    Debug.Log("test method invoked");
-}
+
+    private void OnDisable()
+    {
+        GameController.GameEnd -= OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        isAlive = false;
+        speed = 0;
+        jumpPower = 0;
+    }
+
 void OnCollisionExit2D(Collision2D collision) {
     if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer")) {
         isGrounded = false;

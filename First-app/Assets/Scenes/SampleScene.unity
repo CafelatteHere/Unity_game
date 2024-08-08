@@ -152,10 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aec1805f190e249628cf89baaa76c546, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesCount: 0
-  testEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  currentHealth: 0
+  maxHealth: 100
 --- !u!4 &64874465
 Transform:
   m_ObjectHideFlags: 0
@@ -803,33 +801,6 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 512
-  liveCountDecrease:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 64874464}
-        m_TargetAssemblyTypeName: CharacterStates, Assembly-CSharp
-        m_MethodName: DecreaseLive
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
-      - m_Target: {fileID: 1256298996138194184}
-        m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: UpdateLivesCountText
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
 --- !u!1001 &1387635267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,6 +915,7 @@ MonoBehaviour:
   speed: 100
   boxSize: {x: 0, y: 0}
   groundCheckDistance: 0.2
+  damage: 7
   rbEnemy: {fileID: 1387635271}
   groundLayerMask:
     serializedVersion: 2
@@ -1195,7 +1167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e26a6da2e30746b390994e1f16e95d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  livesText: {fileID: 0}
+  livesText: {fileID: 1149637476}
 --- !u!1001 &2939655033313982318
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1564,6 +1536,7 @@ MonoBehaviour:
   speed: 70
   boxSize: {x: 0, y: 0}
   groundCheckDistance: 0
+  damage: 15
   rbEnemy: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
@@ -1602,7 +1575,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.56
+      value: 1.53
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289107, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1688,7 +1661,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8853100796921289105, guid: a068a10399e6c467a92c83619133301d, type: 3}
   m_PrefabInstance: {fileID: 8853100795378027449}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8853100795378027451
+--- !u!212 &8853100795378027451 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 8853100796921289104, guid: a068a10399e6c467a92c83619133301d, type: 3}
+  m_PrefabInstance: {fileID: 8853100795378027449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &8853100795378027454 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 8853100796921289109, guid: a068a10399e6c467a92c83619133301d, type: 3}
+  m_PrefabInstance: {fileID: 8853100795378027449}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8853100795378027455
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1700,19 +1683,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 132e76687414d4516ac57cdd24dbd44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 60
+  speed: 90
   boxSize: {x: 0, y: 0}
   groundCheckDistance: 0
+  damage: 10
   rbEnemy: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 8704
-  enemyRenderer: {fileID: 0}
---- !u!50 &8853100795378027454 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 8853100796921289109, guid: a068a10399e6c467a92c83619133301d, type: 3}
-  m_PrefabInstance: {fileID: 8853100795378027449}
-  m_PrefabAsset: {fileID: 0}
+    m_Bits: 512
+  enemyRenderer: {fileID: 8853100795378027451}
 --- !u!1001 &8956758963978274460
 PrefabInstance:
   m_ObjectHideFlags: 0

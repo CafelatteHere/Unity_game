@@ -1,12 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+
+[System.Serializable]
+public class MyIntEvent : UnityEvent<int>
+{
+}
 
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] public float speed;
     [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private int damage;
     protected bool isHit;
     protected bool isThrownBack;
     public Rigidbody2D rbEnemy;
@@ -16,8 +24,11 @@ public class Enemy : MonoBehaviour, IDamageable
     private float bottomRight;
     protected float bottomLeft;
     private Collider2D enemyCollider;
+    GameController gameController;
+    public static event Action<int> LiveCountDecrease;
 
     private bool canMove;
+    private bool isGameOver;
 
 
     void Awake()
@@ -37,7 +48,8 @@ public class Enemy : MonoBehaviour, IDamageable
         isHit = false;
         canMove = true;
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y)* Time.deltaTime;
-  
+        gameController = FindObjectOfType<GameController>();
+   
     }
     // Update is called once per frame
     void FixedUpdate()
@@ -54,7 +66,7 @@ public class Enemy : MonoBehaviour, IDamageable
             
             StartCoroutine(WaitAndAwake());
         } 
-        else if (canMove) {
+        else if (canMove && !isGameOver) {
             //ßrbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
             if (checkGroundRight() == false)
             {
@@ -72,11 +84,11 @@ public class Enemy : MonoBehaviour, IDamageable
 // can use only "abstract" (absolutly nothing inside the abstract function) or "virtual" (some code can be inside) for the function that is allowed to be overwritten
 // if trying to make protected this function (public in interface), the is an error "cannot change access modifiers when overriding 'protected' inherited member 'Enemy.TakeDamage(Vector2)'"
 
-   public virtual void TakeDamage(Vector2 direction) 
-   {
+    public virtual void TakeDamage(Vector2 direction) 
+    {
         isHit = true;
-        Debug.Log("Base Enemy class, take damage");
     }
+
     private bool checkGroundLeft()
     {
         Color color = Color.green;
@@ -118,13 +130,31 @@ public class Enemy : MonoBehaviour, IDamageable
         return onGroundRight.collider != null;
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    // Gizmos.DrawWireCube(transform.position - transform.up * groundCheckDistance, boxSize);
-    //    Gizmos.DrawLine(new Vector3(bottomLeft, transform.position.y - groundCheckDistance, 0), new Vector3(bottomLeft, bottomHeight - groundCheckDistance, 0));
-    //    Gizmos.DrawLine(new Vector3(bottomRight, transform.position.y - groundCheckDistance, 0), new Vector3(bottomRight, bottomHeight - groundCheckDistance, 0));
-    //}
 
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
+            {      
+            LiveCountDecrease?.Invoke(damage);
+        }
+    }
+
+    private void OnEnable()
+    {
+        GameController.GameEnd += OnGameOver;
+    }
+
+    private void OnDisable()
+    {
+        GameController.GameEnd -= OnGameOver;
+    }
+
+    private void OnGameOver()
+    {
+        canMove = false;
+        isGameOver = true;
+        Debug.Log(isGameOver + "game over");
+    }
 
     IEnumerator WaitAndAwake()
     {
