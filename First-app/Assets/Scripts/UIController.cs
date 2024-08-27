@@ -4,13 +4,14 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI livesText;
-    GameController gameController;
+    //GameController gameController;
     bool isGameOver;
 
     void Start()
     {
-        gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>(); 
-        livesText.text = "Health: " + gameController.currentHealth;
+       // gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
+        
+        livesText.text = "Health: " + GameController.Instance.currentHealth;
     }
 
 
@@ -29,13 +30,13 @@ public class UIController : MonoBehaviour
     public void OnGameOver()
     {
         isGameOver = true;
-        livesText.text = "Game over!\n Health: " + gameController.currentHealth;
+        livesText.text = "Game over!\n Health: " + GameController.Instance.currentHealth;
     }
 
     public void UpdateLivesCountText(int damage){
         if (!isGameOver)
         {
-            livesText.text = "Health: " + gameController.currentHealth;
+            livesText.text = "Health: " + GameController.Instance.currentHealth;
             Debug.Log("UpdateLivesCountText updated the text");
         } 
     }

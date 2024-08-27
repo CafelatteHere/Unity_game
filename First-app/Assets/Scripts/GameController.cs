@@ -6,7 +6,20 @@ public class GameController : MonoBehaviour
     [SerializeField] public int currentHealth;
     [SerializeField] int maxHealth;
     public static event Action GameEnd;
-    
+    public static GameController Instance { get; private set; }
+
+    private void Awake()
+    {
+       if (Instance == null)
+        {
+            Instance = this;
+        }
+       else
+        {
+            Destroy(gameObject);
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
     void Start()
     {
