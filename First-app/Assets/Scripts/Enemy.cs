@@ -12,7 +12,6 @@ public class MyIntEvent : UnityEvent<int>
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] public float speed;
-    [SerializeField] private Vector2 boxSize;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private int damage;
     [SerializeField] private LayerMask groundLayerMask;
@@ -130,6 +129,8 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         canMove = false;
         isGameOver = true;
+        //setting speed to zero to prevent Enemy continue moving slightly due to any leftover velocity
+        rbEnemy.velocity = Vector2.zero;
         Debug.Log(isGameOver + "game over");
     }
 

@@ -13,11 +13,13 @@ public class GameController : MonoBehaviour
        if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
        else
         {
             Destroy(gameObject);
-            DontDestroyOnLoad(gameObject);
+            Debug.Log("One instance of GameController already exists. Destroying another one");
+            
         }
     }
 

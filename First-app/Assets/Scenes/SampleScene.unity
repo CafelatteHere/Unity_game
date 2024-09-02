@@ -916,10 +916,10 @@ MonoBehaviour:
   boxSize: {x: 0, y: 0}
   groundCheckDistance: 0.2
   damage: 7
-  rbEnemy: {fileID: 1387635271}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8704
+  rbEnemy: {fileID: 1387635271}
   hitSpeed: {x: 10, y: 10}
 --- !u!50 &1387635271 stripped
 Rigidbody2D:
@@ -1451,6 +1451,10 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8332057726735663008, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
+      propertyPath: m_Constraints
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663009, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -1537,10 +1541,10 @@ MonoBehaviour:
   boxSize: {x: 0, y: 0}
   groundCheckDistance: 0
   damage: 15
-  rbEnemy: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 8704
+  rbEnemy: {fileID: 0}
 --- !u!50 &8332057724777447761 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 8332057726735663008, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
@@ -1687,10 +1691,10 @@ MonoBehaviour:
   boxSize: {x: 0, y: 0}
   groundCheckDistance: 0
   damage: 10
-  rbEnemy: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 512
+  rbEnemy: {fileID: 0}
   enemyRenderer: {fileID: 8853100795378027451}
 --- !u!1001 &8956758963978274460
 PrefabInstance:
