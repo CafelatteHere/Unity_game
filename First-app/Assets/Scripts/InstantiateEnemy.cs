@@ -30,17 +30,24 @@ public class InstantiateEnemy : MonoBehaviour
         // and enemy random position.
         if (timeCounter <= 0)
         {
-            SpawnEnemy();
+            SpawnEnemy(); 
             timeCounter = 10;
         }
     }
 
     void SpawnEnemy()
     {
+        Quaternion spawnRotation = Quaternion.identity;
+
         System.Random random = new System.Random();
-        Enemy enemy = Instantiate(enemiesPool[random.Next(0, 2)], spawnPoints[random.Next(0, 2)]);
+        Enemy enemy = Instantiate(enemiesPool[random.Next(0, 2)], spawnPoints[random.Next(0, 2)].position, spawnRotation);
         enemy.enemyRank = random.Next(0, 2);
-        enemy.enemyHealth = 2;
+        enemy.enemyHealth = 3;
+        enemy.speed = random.Next(-90, 90);
+        
+        if (enemy == newEnemy2) {
+            enemy.groundCheckDistance = 0.2f;
+        }
 
 
         //StoneMovement stone = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);

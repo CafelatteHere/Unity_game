@@ -12,7 +12,7 @@ public class MyIntEvent : UnityEvent<int>
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] public float speed;
-    [SerializeField] private float groundCheckDistance;
+    [SerializeField] public float groundCheckDistance;
     [SerializeField] private int damage;
     [SerializeField] public int enemyHealth;
     [SerializeField] public int enemyRank;
