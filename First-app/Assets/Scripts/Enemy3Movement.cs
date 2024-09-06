@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Enemy3Movement : Enemy
 {
-    [SerializeField] private Vector2 hitSpeed; 
+    [SerializeField] private Vector2 knockBackSpeed; 
     
 
      public override void TakeDamage(Vector2 direction)
      {   
         base.TakeDamage(direction);
         isThrownBack = true;
-        rbEnemy.AddForce(hitSpeed * direction, ForceMode2D.Impulse);
+        rbEnemy.AddForce(knockBackSpeed * direction, ForceMode2D.Impulse);
      }
 }

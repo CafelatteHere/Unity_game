@@ -36,7 +36,8 @@ public class StoneMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        
+        GameObject collidedItem = collision.gameObject;
+
         Vector2 direction = new Vector2(Mathf.Sign(stoneDirection.x), 1);
         if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
         {
@@ -50,7 +51,23 @@ public class StoneMovement : MonoBehaviour
 
         if (damageable is not null) 
         {
+            int points = 0;
+            
+            points = 10;
+            if (collision.gameObject != collidedItem)
+            {
+                points += 10;
+            } 
+            
+            int enemyDamage = 1;
+            bool isKilled = false;
             damageable.TakeDamage(stoneDirection);
+            if (collision.gameObject.GetComponent<Enemy>())
+            {
+                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                enemy.CalculateDamage(collision, enemyDamage, out points, out isKilled);
+            }
+            //GameController.UpdateScore(collision, points);
         }
         ///transfer to another layer;
         gameObject.layer = LayerMask.NameToLayer("HitStone");

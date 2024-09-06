@@ -4,7 +4,7 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI livesText;
-    //GameController gameController;
+    [SerializeField] TextMeshProUGUI scoreText;
     bool isGameOver;
 
     void Start()
@@ -12,6 +12,7 @@ public class UIController : MonoBehaviour
        // gameController = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         
         livesText.text = "Health: " + GameController.Instance.currentHealth;
+        scoreText.text = "Score: 0" + GameController.Instance.score;
     }
 
 
@@ -19,12 +20,14 @@ public class UIController : MonoBehaviour
     {
         Enemy.LiveCountDecrease += UpdateLivesCountText;
         GameController.GameEnd += OnGameOver;
+        GameController.ScoreCountIncrease += OnScoreUpdate;
     }
 
     private void OnDisable()
     {
         Enemy.LiveCountDecrease -= UpdateLivesCountText;
         GameController.GameEnd -= OnGameOver;
+        GameController.ScoreCountIncrease -= OnScoreUpdate;
     }
 
     public void OnGameOver()
@@ -39,5 +42,10 @@ public class UIController : MonoBehaviour
             livesText.text = "Health: " + GameController.Instance.currentHealth;
             Debug.Log("UpdateLivesCountText updated the text");
         } 
+    }
+
+    public void OnScoreUpdate(int score)
+    {
+        scoreText.text = "Score: " + score;
     }
 }

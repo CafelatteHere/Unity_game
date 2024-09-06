@@ -14,6 +14,9 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] public float speed;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private int damage;
+    [SerializeField] public int enemyHealth;
+    [SerializeField] public int enemyRank;
+    [SerializeField] public bool isKilled;
     [SerializeField] private LayerMask groundLayerMask;
 
     protected bool isHit;
@@ -27,6 +30,7 @@ public class Enemy : MonoBehaviour, IDamageable
     
     public Rigidbody2D rbEnemy;
     public static event Action<int> LiveCountDecrease;
+    public static event Action <int> AddPoints;
 
 
     void Awake()
@@ -40,6 +44,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     protected virtual void Start()
     {
+        enemyHealth = 3;
         isHit = false;
         canMove = true;
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y)* Time.deltaTime;
@@ -80,8 +85,32 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void TakeDamage(Vector2 direction) 
     {
         isHit = true;
+        
+        if (isKilled)
+        {
+            Destroy(gameObject);
+        }
     }
 
+    public void CalculateDamage(Collision2D collision, int enemyDamage, out int points, out bool isKilled)
+    {
+        enemyHealth -= enemyDamage;
+        points = enemyDamage * enemyRank;
+
+        if (enemyHealth <= 0)
+        {
+            Debug.Log("enemy is <0 health");
+            isKilled = true;
+            Destroy(gameObject);
+            points += 10;
+        }
+        else
+        {
+            isKilled = false;
+        }
+
+        AddPoints?.Invoke(points);
+    }
     private bool checkGroundLeft(float bottomLeft)
     {
         return checkGround(bottomLeft);

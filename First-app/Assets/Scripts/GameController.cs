@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
+    [SerializeField] public int score;
+    [SerializeField] public int enemiesKilled;
     [SerializeField] public int currentHealth;
     [SerializeField] int maxHealth;
     public static event Action GameEnd;
+    public static event Action<int> LiveCountDecrease;
+    public static event Action<int> ScoreCountIncrease;
+
     public static GameController Instance { get; private set; }
 
     private void Awake()
@@ -26,11 +31,14 @@ public class GameController : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        score = 0;
     }
 
     private void OnEnable()
     {
         Enemy.LiveCountDecrease += DecreaseLive;
+        Enemy.AddPoints += UpdateScore;
+        
     }
 
     private void OnDisable()
@@ -52,5 +60,11 @@ public class GameController : MonoBehaviour
             currentHealth -= damage;
         }
     }
-    
+
+    public void UpdateScore(int points)
+    {
+        score += points;
+        ScoreCountIncrease?.Invoke(score); 
+    }
+
 }
