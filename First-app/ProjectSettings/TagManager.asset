@@ -18,7 +18,7 @@ TagManager:
   - Stone
   - HitStone
   - Enemy
-  - 
+  - Drop
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: background
+    uniqueID: 2544179577
+    locked: 0
+  - name: middleground
+    uniqueID: 2477258953
+    locked: 0
+  - name: enemy
+    uniqueID: 303962607
+    locked: 0
+  - name: items
+    uniqueID: 2688686079
+    locked: 0
+  - name: player
+    uniqueID: 2364151837
     locked: 0
