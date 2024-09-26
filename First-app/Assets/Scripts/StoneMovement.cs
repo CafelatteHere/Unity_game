@@ -4,6 +4,7 @@ public class StoneMovement : MonoBehaviour
 {
    
     [SerializeField] private Vector2 LaunchSpeed;
+    [SerializeField] float damageAmount;
     public Enemy enemy;
     public Vector2 stoneDirection;
 
@@ -46,28 +47,13 @@ public class StoneMovement : MonoBehaviour
             
             return;          
         }
-       
+
+        float damageAmount = 20;
         var damageable = collision.gameObject.GetComponent<IDamageable>();
 
         if (damageable is not null) 
-        {
-            int points = 0;
-            
-            points = 10;
-            if (collision.gameObject != collidedItem)
-            {
-                points += 10;
-            } 
-            
-            int enemyDamage = 1;
-            bool isKilled = false;
-            damageable.TakeDamage(stoneDirection);
-            if (collision.gameObject.GetComponent<Enemy>())
-            {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                enemy.CalculateDamage(collision, enemyDamage, out points, out isKilled);
-            }
-            //GameController.UpdateScore(collision, points);
+        { 
+            damageable.TakeDamage(stoneDirection, damageAmount);
         }
         ///transfer to another layer;
         gameObject.layer = LayerMask.NameToLayer("HitStone");

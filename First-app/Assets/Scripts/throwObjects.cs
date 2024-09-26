@@ -11,7 +11,7 @@ public class throwObjects : MonoBehaviour
     [SerializeField] private int totalThrows;
     private KeyCode throwKey = KeyCode.T;
     private CharacterMovements player;
-    private Rigidbody2D rb;
+    bool isGameOver;
 
     private void Awake()
     {
@@ -19,7 +19,6 @@ public class throwObjects : MonoBehaviour
         //characterMovements.direction = CharacterMovements.direction;
         //because those two scripts are attchd to same GameObject Player
         player = GetComponent<CharacterMovements>();
-        rb = GetComponent<Rigidbody2D>();
     }
 
 
@@ -31,13 +30,31 @@ public class throwObjects : MonoBehaviour
         }
 
     }
+    private void OnEnable()
+    {
+        GameController.GameEnd += GameStateCheck;
+    }
+
+    private void OnDisable()
+    {
+        GameController.GameEnd -= GameStateCheck;
+    }
+
+    private void GameStateCheck()
+    {
+        isGameOver = true;
+    }
 
     private void Throw()
     {
-        StoneMovement stone = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);
-        var direction =new Vector2(player.currentPlayerDirection, 1);
+        if (!isGameOver)
+        {
+            StoneMovement stone = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);
+            var direction = new Vector2(player.currentPlayerDirection, 1);
+
+            stone.Launch(direction);
+            totalThrows--;
+        }
        
-        stone.Launch(direction);
-        totalThrows--;       
     }
 }

@@ -6,9 +6,7 @@ public class Enemy1Movement : Enemy
    
     [SerializeField] SpriteRenderer enemyRenderer;
 
-    public void startTakeDamage(Vector2 direction){
-        TakeDamage(direction);
-    }
+
 
     protected override void Start()
     {
@@ -16,9 +14,9 @@ public class Enemy1Movement : Enemy
         enemyRenderer = GetComponent<SpriteRenderer>();
     }
 
-    public override void TakeDamage(Vector2 direction)
+    public override void TakeDamage(Vector2 direction, float enemyDamageAmount)
     {
-        base.TakeDamage(direction);
+        base.TakeDamage(direction,enemyDamageAmount);
         StartCoroutine(HandleEnemyState());
     }
 

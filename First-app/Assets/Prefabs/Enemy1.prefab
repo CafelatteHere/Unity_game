@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8853100796921289104}
   - component: {fileID: 8853100796921289109}
   - component: {fileID: 8853100796921289106}
-  - component: {fileID: 8853100796921289108}
+  - component: {fileID: -1946641655838583903}
   m_Layer: 6
   m_Name: Enemy1
   m_TagString: Untagged
@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 6
+  m_Constraints: 4
 --- !u!61 &8853100796921289106
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8853100796921289108
+--- !u!114 &-1946641655838583903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,12 +143,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8853100796921289105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 388a867c6a15e4cb78612f2ee6186310, type: 3}
+  m_Script: {fileID: 11500000, guid: 132e76687414d4516ac57cdd24dbd44d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
-  boxSize: {x: 0, y: 0}
   groundCheckDistance: 0
+  playerDamage: 0
+  enemyDamageAmount: 0
+  enemyHealth: 40
+  enemyRank: 1
+  isKilled: 0
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rbEnemy: {fileID: 0}
+  enemyRenderer: {fileID: 0}

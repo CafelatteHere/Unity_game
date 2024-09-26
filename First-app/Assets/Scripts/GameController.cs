@@ -3,13 +3,15 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    [SerializeField] public int score;
-    [SerializeField] public int enemiesKilled;
-    [SerializeField] public int currentHealth;
     [SerializeField] int maxHealth;
+
+    public float score;
+    public int enemiesKilled;
+    public int currentHealth;
+
     public static event Action GameEnd;
     public static event Action<int> LiveCountDecrease;
-    public static event Action<int> ScoreCountIncrease;
+    public static event Action<float> ScoreCountIncrease;
 
     public static GameController Instance { get; private set; }
 
@@ -37,13 +39,14 @@ public class GameController : MonoBehaviour
     private void OnEnable()
     {
         Enemy.LiveCountDecrease += DecreaseLive;
-        Enemy.AddPoints += UpdateScore;
+        Enemy.AddPoints += calculatePoints;
         
     }
 
     private void OnDisable()
     {
         Enemy.LiveCountDecrease -= DecreaseLive;
+        Enemy.AddPoints -= calculatePoints;
     }
 
     public void DecreaseLive(int damage)
@@ -61,10 +64,16 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void UpdateScore(int points)
+    public void calculatePoints(float points, bool enemyIsKilled, float enemyRank)
     {
+        points += (enemyRank * 0.5f);
         score += points;
-        ScoreCountIncrease?.Invoke(score); 
+        
+        if (enemyIsKilled)
+        {
+            enemiesKilled += 1;
+        }
+        ScoreCountIncrease?.Invoke(score);
     }
 
 }

@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class InstantiateEnemy : MonoBehaviour
 {
-    [SerializeField] private Enemy newEnemy1;
-    [SerializeField] private Enemy newEnemy2;
-    [SerializeField] private Enemy newEnemy3;
-    [SerializeField] private Transform enemySpawnPoint1;
-    [SerializeField] private Transform enemySpawnPoint2;
-    [SerializeField] private Transform enemySpawnPoint3;
+    [SerializeField] private Enemy[] enemiesPool;
+    [SerializeField] private Transform[] spawnPoints;
+
     private float timeCounter=10;
-    private List<Enemy> enemiesPool;
-    private List<Transform> spawnPoints;
+    bool isGameOver;
+    public List<Enemy> enemies;
 
     // Start is called before the first frame update
     void Start()
     {
-        System.Random random = new System.Random();
-        enemiesPool = new List<Enemy> { newEnemy1, newEnemy2, newEnemy3 };
-        spawnPoints = new List<Transform> { enemySpawnPoint1, enemySpawnPoint2, enemySpawnPoint3};
+        enemies = new List<Enemy>();
+        Enemy[] enemiesAtScene = FindObjectsOfType<Enemy>();
+        enemies.AddRange(enemiesAtScene);
+      
     }
 
     // Update is called once per frame
@@ -33,6 +31,24 @@ public class InstantiateEnemy : MonoBehaviour
             SpawnEnemy(); 
             timeCounter = 10;
         }
+
+        
+        
+    }
+
+    private void OnEnable()
+    {
+        GameController.GameEnd += GameStateCheck;
+    }
+
+    private void OnDisable()
+    {
+        GameController.GameEnd -= GameStateCheck; 
+    }
+
+    private void GameStateCheck ()
+    {
+        isGameOver = true;
     }
 
     void SpawnEnemy()
@@ -40,20 +56,37 @@ public class InstantiateEnemy : MonoBehaviour
         Quaternion spawnRotation = Quaternion.identity;
 
         System.Random random = new System.Random();
-        Enemy enemy = Instantiate(enemiesPool[random.Next(0, 2)], spawnPoints[random.Next(0, 2)].position, spawnRotation);
-        enemy.enemyRank = random.Next(0, 2);
-        enemy.enemyHealth = 3;
-        enemy.speed = random.Next(-90, 90);
-        
-        if (enemy == newEnemy2) {
-            enemy.groundCheckDistance = 0.2f;
+        if (!isGameOver && enemies.Count < 8)
+        {
+            Enemy randomEnemy = enemiesPool[Random.Range(0, enemiesPool.Length-1)];
+            Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length-1)];
+            Enemy enemy = Instantiate(randomEnemy, randomSpawnPoint.position, spawnRotation);
+            enemy.enemyRank = random.Next(1, 3);
+            enemy.enemyHealth = enemy.enemyRank * 15;
+            enemy.speed = random.Next(-90, 90);
+            enemy.gameObject.layer = LayerMask.NameToLayer("Enemy");
+            if (enemy.speed == 0)
+            {
+                enemy.speed += 30;
+            }
+            else if (Mathf.Abs(enemy.speed) < 30)
+            {
+                float sign = Mathf.Sign(enemy.speed);
+                enemy.speed += 30 * sign;
+
+            }
+            enemy.groundLayerMask = LayerMask.GetMask("groundLayer");
+
+            if (enemy.enemyRank == 2)
+            {
+                enemy.groundCheckDistance = 0.2f;
+            }
+            enemies.Add(enemy);
+            Debug.Log("adding " + enemy);
+           foreach(Enemy enemyObj in enemies)
+            {
+                Debug.Log(enemyObj);
+            }
         }
-
-
-        //StoneMovement stone = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);
-        //var direction = new Vector2(player.currentPlayerDirection, 1);
-
-        //stone.Launch(direction);
-        //totalThrows--;
     }
 }

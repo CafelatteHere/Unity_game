@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2251746855786921485}
   - component: {fileID: 1457745569587820782}
   - component: {fileID: 2381936195982638115}
-  - component: {fileID: 7266284296989440621}
+  - component: {fileID: 2147015069006923439}
   m_Layer: 7
   m_Name: Enemy3
   m_TagString: Untagged
@@ -133,8 +133,8 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 6
---- !u!114 &7266284296989440621
+  m_Constraints: 4
+--- !u!114 &2147015069006923439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,12 +143,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 5588942649185820146}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 388a867c6a15e4cb78612f2ee6186310, type: 3}
+  m_Script: {fileID: 11500000, guid: 6e84473042b054af98d16aaf8d4bd1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -3
-  boxSize: {x: 1, y: 0.5}
-  groundCheckDistance: 0.79
+  speed: 0
+  groundCheckDistance: 0
+  playerDamage: 0
+  enemyDamageAmount: 0
+  enemyHealth: 70
+  enemyRank: 3
+  isKilled: 0
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
+  rbEnemy: {fileID: 0}
+  knockBackSpeed: {x: 0, y: 0}

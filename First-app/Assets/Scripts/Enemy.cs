@@ -13,24 +13,26 @@ public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] public float speed;
     [SerializeField] public float groundCheckDistance;
-    [SerializeField] private int damage;
-    [SerializeField] public int enemyHealth;
+    [SerializeField] private int playerDamage;
+    [SerializeField] private float enemyDamageAmount;
+    [SerializeField] public float enemyHealth;
     [SerializeField] public int enemyRank;
     [SerializeField] public bool isKilled;
-    [SerializeField] private LayerMask groundLayerMask;
+    [SerializeField] public LayerMask groundLayerMask;
 
     protected bool isHit;
     protected bool isThrownBack;
     protected float bottomLeft;
-    protected float bottomRight;
+    protected float bottomRight; 
 
     private bool canMove;
     private bool isGameOver;
     private float width;
+    InstantiateEnemy instantiateEnemy;
     
     public Rigidbody2D rbEnemy;
     public static event Action<int> LiveCountDecrease;
-    public static event Action <int> AddPoints;
+    public static event Action <float, bool, float> AddPoints;
 
 
     void Awake()
@@ -39,12 +41,12 @@ public class Enemy : MonoBehaviour, IDamageable
         ///better to use box collider
         rbEnemy = GetComponent<Rigidbody2D>();
         width = GetComponent<Renderer>().bounds.size.x;
+        instantiateEnemy = FindAnyObjectByType<InstantiateEnemy>();
        //rbEnemy.transform.position = startPoint;
     }
 
     protected virtual void Start()
     {
-        enemyHealth = 3;
         isHit = false;
         canMove = true;
         rbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y)* Time.deltaTime;
@@ -58,6 +60,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if (isHit) {
             isHit = false;
             canMove = false;
+
             if (!isThrownBack) {
                 rbEnemy.velocity = Vector2.zero;
             }
@@ -65,7 +68,7 @@ public class Enemy : MonoBehaviour, IDamageable
             StartCoroutine(WaitAndAwake());
         } 
         else if (canMove && !isGameOver) {
-            //ßrbEnemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
+            //Enemy.velocity = new Vector2(speed, rbEnemy.velocity.y) * Time.deltaTime;
             if (checkGroundRight(bottomRight) == false)
             {
                 speed = Mathf.Abs(speed) * -1;
@@ -82,35 +85,30 @@ public class Enemy : MonoBehaviour, IDamageable
 // can use only "abstract" (absolutly nothing inside the abstract function) or "virtual" (some code can be inside) for the function that is allowed to be overwritten
 // if trying to make protected this function (public in interface), the is an error "cannot change access modifiers when overriding 'protected' inherited member 'Enemy.TakeDamage(Vector2)'"
 
-    public virtual void TakeDamage(Vector2 direction) 
+    public virtual void TakeDamage(Vector2 direction, float damageAmount) 
     {
+        bool enemyIsKilled = false;
         isHit = true;
-        
-        if (isKilled)
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    public void CalculateDamage(Collision2D collision, int enemyDamage, out int points, out bool isKilled)
-    {
-        enemyHealth -= enemyDamage;
-        points = enemyDamage * enemyRank;
+        Debug.Log(damageAmount);
+        enemyHealth -= damageAmount;
+        float points = 10;
 
         if (enemyHealth <= 0)
         {
             Debug.Log("enemy is <0 health");
-            isKilled = true;
+            Enemy enemy = gameObject.GetComponent<Enemy>();
+            
+            instantiateEnemy.enemies.Remove(enemy);
+            Debug.Log("removing " + enemy);
             Destroy(gameObject);
             points += 10;
-        }
-        else
-        {
-            isKilled = false;
-        }
+            enemyIsKilled = true;
+            
+        } 
 
-        AddPoints?.Invoke(points);
+        AddPoints?.Invoke(points, enemyIsKilled, enemyRank);
     }
+       
     private bool checkGroundLeft(float bottomLeft)
     {
         return checkGround(bottomLeft);
@@ -139,8 +137,9 @@ public class Enemy : MonoBehaviour, IDamageable
      void OnCollisionEnter2D(Collision2D collision)
      {
          if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
-          {      
-            LiveCountDecrease?.Invoke(damage);
+          {
+            playerDamage += 1;
+            LiveCountDecrease?.Invoke(playerDamage);
          }
      }
 
@@ -160,7 +159,7 @@ public class Enemy : MonoBehaviour, IDamageable
         isGameOver = true;
         //setting speed to zero to prevent Enemy continue moving slightly due to any leftover velocity
         rbEnemy.velocity = Vector2.zero;
-        Debug.Log(isGameOver + "game over");
+
     }
 
     IEnumerator WaitAndAwake()

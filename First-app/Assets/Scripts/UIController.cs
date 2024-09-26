@@ -40,11 +40,10 @@ public class UIController : MonoBehaviour
         if (!isGameOver)
         {
             livesText.text = "Health: " + GameController.Instance.currentHealth;
-            Debug.Log("UpdateLivesCountText updated the text");
         } 
     }
 
-    public void OnScoreUpdate(int score)
+    public void OnScoreUpdate(float score)
     {
         scoreText.text = "Score: " + score;
     }
