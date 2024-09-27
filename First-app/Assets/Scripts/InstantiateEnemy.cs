@@ -82,7 +82,7 @@ public class InstantiateEnemy : MonoBehaviour
                 enemy.groundCheckDistance = 0.2f;
             }
             enemies.Add(enemy);
-            Debug.Log("adding " + enemy);
+
            foreach(Enemy enemyObj in enemies)
             {
                 Debug.Log(enemyObj);

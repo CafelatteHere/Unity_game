@@ -95,11 +95,9 @@ public class Enemy : MonoBehaviour, IDamageable
 
         if (enemyHealth <= 0)
         {
-            Debug.Log("enemy is <0 health");
             Enemy enemy = gameObject.GetComponent<Enemy>();
             
             instantiateEnemy.enemies.Remove(enemy);
-            Debug.Log("removing " + enemy);
             Destroy(gameObject);
             points += 10;
             enemyIsKilled = true;
