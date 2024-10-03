@@ -51,12 +51,11 @@ public class GameController : MonoBehaviour
 
     public void DecreaseLive(int damage)
     {
-        Debug.Log("health is: " + currentHealth);
         if ((currentHealth - damage) <= 0)
         {
             currentHealth = 0;
             GameEnd?.Invoke();
-
+            Debug.Log("invoked game end");
         }
         else
         {

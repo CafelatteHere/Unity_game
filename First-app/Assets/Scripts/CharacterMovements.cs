@@ -1,5 +1,5 @@
 using UnityEngine;
-
+using Cinemachine;
 
 public class CharacterMovements : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class CharacterMovements : MonoBehaviour
     private bool isGrounded;
     private bool isJumping;
     private bool isAlive;
+    private CinemachineImpulseSource impulseSource;
 
     //we cat get it publicly but set only privately only in this script
     public int currentPlayerDirection { get; private set; } = 1;
@@ -23,6 +24,7 @@ public class CharacterMovements : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
         isAlive = true;
     }
 
@@ -109,10 +111,12 @@ void OnCollisionEnter2D(Collision2D collision) {
 
     private void OnGameOver()
     {
+        impulseSource.GenerateImpulse(5);
         isAlive = false;
         speed = 0;
         jumpPower = 0;
-    }
+        Debug.Log("we are here, after impulse");
+    }   
 
 void OnCollisionExit2D(Collision2D collision) {
     if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))
