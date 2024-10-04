@@ -3232,6 +3232,10 @@ PrefabInstance:
       propertyPath: restBetweenThrows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 422240310965428638, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
+      propertyPath: roundObjectToThrow
+      value: 
+      objectReference: {fileID: 7545336087632714253, guid: e62bb2952b6da4ab9953a50c24a9b11d, type: 3}
     - target: {fileID: 3133276220907410360, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_Name
       value: Character
@@ -3242,7 +3246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410363, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_SortingLayer
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3133276220907410363, guid: 494d77579460744d4b7f695aad7f2abf, type: 3}
       propertyPath: m_SortingOrder

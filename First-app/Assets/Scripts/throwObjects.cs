@@ -5,12 +5,13 @@ public class throwObjects : MonoBehaviour
     [Header("Objects")]
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private StoneMovement objectToThrow;
+    [SerializeField] private RoundStoneMovement roundObjectToThrow;
 
 
     [Header("Actions & Settings")]
     [SerializeField] private int totalThrows;
     private KeyCode throwKey = KeyCode.T;
-    private KeyCode throwKey = KeyCode.Keypad5;
+    private KeyCode throwKey2 = KeyCode.U;
     private CharacterMovements player;
     bool isGameOver;
 
@@ -32,7 +33,7 @@ public class throwObjects : MonoBehaviour
 
         if (Input.GetKeyDown(throwKey2) && totalThrows > 0)
         {
-            Throw();
+            Throw(roundObjectToThrow);
         }
 
     }
