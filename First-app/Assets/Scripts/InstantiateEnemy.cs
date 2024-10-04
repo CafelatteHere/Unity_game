@@ -79,8 +79,7 @@ public class InstantiateEnemy : MonoBehaviour
 
             if (enemy.enemyRank == 2)
             {
-                Debug.Log(enemy.groundCheckDistance);
-                //enemy.groundCheckDistance = 0.2f;
+                enemy.groundCheckDistance = 0.2f;
             }
             enemies.Add(enemy);
         }

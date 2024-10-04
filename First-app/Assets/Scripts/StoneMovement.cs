@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class StoneMovement : MonoBehaviour, IThrowable
+public class StoneMovement : MonoBehaviour
 {
    
     [SerializeField] private Vector2 LaunchSpeed;

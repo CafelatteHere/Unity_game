@@ -26,7 +26,7 @@ public class throwObjects : MonoBehaviour
     {
         if (Input.GetKeyDown(throwKey) && totalThrows > 0)
         {
-            Throw(objectToThrow); ;
+            Throw ();
         }
 
     }
@@ -45,14 +45,14 @@ public class throwObjects : MonoBehaviour
         isGameOver = true;
     }
 
-    private void Throw<T>(T obj) where T: UnityEngine.Object, IThrowable
+    private void Throw()
     {
         if (!isGameOver)
         {
-            obj = Instantiate(obj, spawnPoint.position, objectToThrow.transform.rotation);
+            StoneMovement stone = Instantiate(objectToThrow, spawnPoint.position, objectToThrow.transform.rotation);
             var direction = new Vector2(player.currentPlayerDirection, 1);
 
-            obj.Launch(direction);
+            stone.Launch(direction);
             totalThrows--;
         }
        

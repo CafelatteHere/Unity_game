@@ -5,11 +5,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI livesText;
     [SerializeField] TextMeshProUGUI scoreText;
-
     bool isGameOver;
-
-
-   
 
     void Start()
     {
@@ -51,4 +47,4 @@ public class UIController : MonoBehaviour
     {
         scoreText.text = "Score: " + score;
     }
-} 
+}
