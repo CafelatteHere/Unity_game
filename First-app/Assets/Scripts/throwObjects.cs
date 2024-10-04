@@ -10,6 +10,7 @@ public class throwObjects : MonoBehaviour
     [Header("Actions & Settings")]
     [SerializeField] private int totalThrows;
     private KeyCode throwKey = KeyCode.T;
+    private KeyCode throwKey = KeyCode.Keypad5;
     private CharacterMovements player;
     bool isGameOver;
 
@@ -27,6 +28,11 @@ public class throwObjects : MonoBehaviour
         if (Input.GetKeyDown(throwKey) && totalThrows > 0)
         {
             Throw(objectToThrow); ;
+        }
+
+        if (Input.GetKeyDown(throwKey2) && totalThrows > 0)
+        {
+            Throw();
         }
 
     }

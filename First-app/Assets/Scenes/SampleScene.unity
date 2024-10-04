@@ -681,7 +681,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.2550006, y: 6.41, z: -10}
+  m_LocalPosition: {x: 7.922773, y: 2.0194068, z: -12.234768}
   m_LocalScale: {x: 0.99999994, y: 1.0000001, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2065,7 +2065,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2251746855786921485, guid: b599465672b7c435cb5488d350738d4f, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 2251746855786921485, guid: b599465672b7c435cb5488d350738d4f, type: 3}
       propertyPath: m_SortingLayerID
@@ -3449,7 +3449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663014, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8332057726735663014, guid: b9f590469cd1d4e318c86f1be94c0d75, type: 3}
       propertyPath: m_SortingLayerID
@@ -3491,7 +3491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 70
-  groundCheckDistance: 0
+  groundCheckDistance: 0.3
   playerDamage: 0
   enemyDamageAmount: 0
   enemyHealth: 55
@@ -3499,7 +3499,7 @@ MonoBehaviour:
   isKilled: 0
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 8704
+    m_Bits: 512
   rbEnemy: {fileID: 0}
 --- !u!1001 &8853100795378027449
 PrefabInstance:
@@ -3510,7 +3510,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8853100796921289104, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_SortingLayer
-      value: 3
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 8853100796921289104, guid: a068a10399e6c467a92c83619133301d, type: 3}
       propertyPath: m_SortingLayerID

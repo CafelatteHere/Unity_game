@@ -171,5 +171,5 @@ MonoBehaviour:
   isKilled: 0
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   rbEnemy: {fileID: 0}
