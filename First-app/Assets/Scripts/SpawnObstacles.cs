@@ -29,7 +29,8 @@ public class SpawnObstacles : MonoBehaviour
     {
         for (int i = 0; i < amountToPool; i++)
         {
-            GameObject newDrop = Instantiate(objectToSpawn);
+            GameObject parentGameObject = GameObject.FindGameObjectWithTag("Drops");
+            GameObject newDrop = Instantiate(objectToSpawn, parentGameObject.transform);
             newDrop.SetActive(false);
             pooledDrops.Enqueue(newDrop);
         }

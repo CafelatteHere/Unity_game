@@ -38,6 +38,7 @@ public class StoneMovement : MonoBehaviour, IThrowable
     private void OnCollisionEnter2D(Collision2D collision)
     {
         GameObject collidedItem = collision.gameObject;
+        Debug.Log(collidedItem);
 
         Vector2 direction = new Vector2(Mathf.Sign(stoneDirection.x), 1);
         if (collision.gameObject.layer == LayerMask.NameToLayer("groundLayer"))

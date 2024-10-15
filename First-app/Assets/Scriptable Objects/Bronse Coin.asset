@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cebb9b4be0b447f196707bbeab7f712, type: 3}
+  m_Name: Bronse Coin
+  m_EditorClassIdentifier: 
+  itemName: Bronse Coin
+  itemDescription: can be used to buy things in shop. Common
+  type: coin
+  value: 4
+  quantity: 2
+  image: {fileID: 21300000, guid: 1e2ed6d75016b40b9bc6d17f7b9f9fdb, type: 3}

@@ -60,7 +60,8 @@ public class InstantiateEnemy : MonoBehaviour
         {
             Enemy randomEnemy = enemiesPool[Random.Range(0, enemiesPool.Length-1)];
             Transform randomSpawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length-1)];
-            Enemy enemy = Instantiate(randomEnemy, randomSpawnPoint.position, spawnRotation);
+            GameObject parentGameObject = GameObject.FindGameObjectWithTag("Enemies");
+            Enemy enemy = Instantiate(randomEnemy, randomSpawnPoint.position, spawnRotation, parentGameObject.transform);
             enemy.enemyRank = random.Next(1, 3);
             enemy.enemyHealth = enemy.enemyRank * 15;
             enemy.speed = random.Next(-90, 90);
