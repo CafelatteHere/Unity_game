@@ -6,19 +6,21 @@ using UnityEngine.UI;
 
 public class ShowCollectible : MonoBehaviour
 {
-    public MakeCollectibles item;
+    [SerializeField] MakeCollectibles item;
 
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI description;
-    public Image itemImage;
-    public TextMeshProUGUI type;
-    public TextMeshProUGUI quantity;
-    public TextMeshProUGUI value;
-    public TextMeshProUGUI actionText;
-    // Start is called before the first frame update
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] TextMeshProUGUI description;
+    [SerializeField] Image itemImage;
+    [SerializeField] TextMeshProUGUI type;
+    [SerializeField] TextMeshProUGUI quantity;
+    [SerializeField] TextMeshProUGUI value;
+    [SerializeField] TextMeshProUGUI actionText;
+
     void Start()
     {
         nameText.text = item.itemName;
+        quantity.text = item.quantity.ToString();
+        value.text = item.value.ToString();
         itemImage.sprite = item.image;
         nameText.enabled = true;
       
@@ -29,20 +31,23 @@ public class ShowCollectible : MonoBehaviour
         Debug.Log(collision.gameObject);
         if (collision.gameObject.tag == "Player")
         {
-            actionText.text = $"Collected {nameText}! \n Quantity: {quantity}, value: {value}";
+            actionText.text = $"Collected {nameText.text.ToString()}! \n Quantity: {quantity.text}, value: {value.text.ToString()}";
             Debug.Log(actionText.text);
+            itemImage.gameObject.SetActive(false);
+            nameText.gameObject.SetActive(false);
+            actionText.gameObject.SetActive(true);
+            StartCoroutine(WaitBeforeDestroy());
             nameText.enabled = false;
-            actionText.enabled = true;
+            
 
-            Destroy(gameObject);
-            StartCoroutine(DestroyText());
+            
         }   
     }
 
-    IEnumerator DestroyText()
+    IEnumerator WaitBeforeDestroy()
     {
-        yield return new WaitForSecondsRealtime(2);
-        actionText.enabled = false;
+        yield return new WaitForSecondsRealtime(1);
+        Destroy(gameObject);
     }
 
 
