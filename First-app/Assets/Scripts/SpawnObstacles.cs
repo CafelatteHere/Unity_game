@@ -101,7 +101,7 @@ public class SpawnObstacles : MonoBehaviour
                 newDrop.SetActive(false);
                 pooledDrops.Enqueue(newDrop);
             }
-                }        
+                }
     }
 
 }
