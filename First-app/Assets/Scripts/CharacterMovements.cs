@@ -1,5 +1,6 @@
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class CharacterMovements : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class CharacterMovements : MonoBehaviour
     private bool isJumping;
     private bool isAlive;
     private CinemachineImpulseSource impulseSource;
+    private Vector2 rawInput;
 
     //we cat get it publicly but set only privately only in this script
     public int currentPlayerDirection { get; private set; } = 1;
@@ -26,40 +28,73 @@ public class CharacterMovements : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         isAlive = true;
-    }
+        }
+
+   
 
     void Update()
     {
+        //if (isAlive)
+        //{
+        //    //Vector3 delta = rawInput;
+        //    //horizontalDirection = rawInput.x;
+        //    //transform.position += delta * speed * Time.deltaTime;
+        //}
+        //else
+        //{
+        //    horizontalDirection = 0;
+        //}
+        
+      
+        //ShouldIFlip(horizontalDirection);
+        //rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
+        
+      
+     
+        
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        Debug.Log("move input received");
         if (isAlive)
         {
-            horizontalDirection = Input.GetAxis("Horizontal");
+            Vector3 delta = rawInput;
+            horizontalDirection = rawInput.x;
+            transform.position += delta * speed * Time.deltaTime;
         }
         else
         {
             horizontalDirection = 0;
         }
-        
-      
+
+        rawInput = context.ReadValue<Vector2>();
+        Debug.Log(rawInput.x);
+
         ShouldIFlip(horizontalDirection);
-        rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y); 
-        
-      
-         if (isGrounded  && (Input.GetKeyDown(KeyCode.Space) )) 
+        rb.velocity = new Vector2(horizontalDirection * speed, rb.velocity.y);
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        Debug.Log("jump input received");
+        if (isGrounded && context.started)
         {
-            rb.velocity = new Vector2 (horizontalDirection, jumpPower);
+            rb.velocity = new Vector2(horizontalDirection, jumpPower);
             isJumping = true;
             jumpTimeCounter = jumpTime;
         }
 
-        if (Input.GetKey(KeyCode.Space) && isJumping && (jumpTimeCounter > 0)) {
-            rb.velocity = new Vector2 (horizontalDirection, jumpPower);
-            jumpTimeCounter = jumpTimeCounter  - Time.deltaTime;     
-        } 
+        if (context.performed && isJumping && (jumpTimeCounter > 0))
+        {
+            rb.velocity = new Vector2(horizontalDirection, jumpPower);
+            jumpTimeCounter = jumpTimeCounter - Time.deltaTime;
+        }
 
-        if (Input.GetKeyUp(KeyCode.Space)) {
+        if (context.canceled)
+        {
             isJumping = false;
         }
-        
     }
 
     void ShouldIFlip(float horizontalDirection) {
