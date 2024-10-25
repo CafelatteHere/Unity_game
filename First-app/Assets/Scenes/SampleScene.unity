@@ -156,7 +156,7 @@ MonoBehaviour:
   maxHealth: 5
   score: 0
   enemiesKilled: 0
-  currentHealth: 0
+  currentHealth: 5
 --- !u!4 &64874465
 Transform:
   m_ObjectHideFlags: 0
@@ -2411,7 +2411,7 @@ GameObject:
   - component: {fileID: 1643233074}
   m_Layer: 0
   m_Name: obstacle
-  m_TagString: Untagged
+  m_TagString: ObstacleSpawnPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2898,10 +2898,50 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 319124395, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 622
+      objectReference: {fileID: 0}
+    - target: {fileID: 319124395, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 319124396, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_margin.x
+      value: -315.11707
+      objectReference: {fileID: 0}
+    - target: {fileID: 319124396, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_margin.z
+      value: 256.16125
+      objectReference: {fileID: 0}
+    - target: {fileID: 319124396, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149637475, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 357
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149637475, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 264
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149637476, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_margin.x
+      value: -43.565247
+      objectReference: {fileID: 0}
+    - target: {fileID: 1149637476, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1256298995789433920, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 1256298995789433920, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
+      propertyPath: m_SortingLayerID
+      value: 958577207
+      objectReference: {fileID: 0}
     - target: {fileID: 1256298995789433923, guid: 401dc7653965748439d8d9cee6d3472f, type: 3}
       propertyPath: m_Name
       value: Canvas

@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -40,27 +42,40 @@ public class GameController : MonoBehaviour
     {
         Enemy.LiveCountDecrease += DecreaseLive;
         Enemy.AddPoints += calculatePoints;
-        
+        DropMovement.AddDamageToPlayer += DecreaseLive;
+
+
     }
 
     private void OnDisable()
     {
         Enemy.LiveCountDecrease -= DecreaseLive;
         Enemy.AddPoints -= calculatePoints;
+        DropMovement.AddDamageToPlayer -= DecreaseLive;
     }
 
     public void DecreaseLive(int damage)
     {
+        Debug.Log("decrease life is invoked");
         if ((currentHealth - damage) <= 0)
         {
             currentHealth = 0;
+
             GameEnd?.Invoke();
-            Debug.Log("invoked game end");
+            StartCoroutine(BeforeGameEnd());
         }
         else
         {
             currentHealth -= damage;
         }
+    }
+
+    IEnumerator BeforeGameEnd()
+    {
+        Debug.Log("wait a bit before game end");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(0);
+        Destroy(gameObject);
     }
 
     public void calculatePoints(float points, bool enemyIsKilled, float enemyRank)
