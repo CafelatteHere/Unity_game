@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     public int currentHealth;
 
     public static event Action GameEnd;
-    public static event Action<int> LiveCountDecrease;
+   // public static event Action<int> LiveCountDecrease;
     public static event Action<float> ScoreCountIncrease;
 
     public static GameController Instance { get; private set; }
@@ -43,6 +43,7 @@ public class GameController : MonoBehaviour
         Enemy.LiveCountDecrease += DecreaseLive;
         Enemy.AddPoints += calculatePoints;
         DropMovement.AddDamageToPlayer += DecreaseLive;
+        CharacterMovements.AddDamageToPlayer += DecreaseLive;
 
 
     }
@@ -52,6 +53,7 @@ public class GameController : MonoBehaviour
         Enemy.LiveCountDecrease -= DecreaseLive;
         Enemy.AddPoints -= calculatePoints;
         DropMovement.AddDamageToPlayer -= DecreaseLive;
+        CharacterMovements.AddDamageToPlayer -= DecreaseLive;
     }
 
     public void DecreaseLive(int damage)
@@ -72,7 +74,6 @@ public class GameController : MonoBehaviour
 
     IEnumerator BeforeGameEnd()
     {
-        Debug.Log("wait a bit before game end");
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(0);
         Destroy(gameObject);

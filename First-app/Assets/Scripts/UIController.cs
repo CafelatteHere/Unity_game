@@ -25,6 +25,8 @@ public class UIController : MonoBehaviour
         Enemy.LiveCountDecrease += UpdateLivesCountText;
         GameController.GameEnd += OnGameOver;
         GameController.ScoreCountIncrease += OnScoreUpdate;
+        //DropMovement.AddDamageToPlayer += UpdateLivesCountText;
+        //CcterMovements.AddDamageToPlayer += UpdateLivesCountText;
     }
 
     private void OnDisable()
@@ -32,6 +34,8 @@ public class UIController : MonoBehaviour
         Enemy.LiveCountDecrease -= UpdateLivesCountText;
         GameController.GameEnd -= OnGameOver;
         GameController.ScoreCountIncrease -= OnScoreUpdate;
+        //DropMovement.AddDamageToPlayer -= UpdateLivesCountText;
+        //CharacterMovements.AddDamageToPlayer -= UpdateLivesCountText;
     }
 
     public void OnGameOver()
@@ -44,7 +48,11 @@ public class UIController : MonoBehaviour
         if (!isGameOver)
         {
             livesText.text = "Health: " + GameController.Instance.currentHealth;
-        } 
+        }
+        else
+        {
+            OnGameOver();
+        }
     }
 
     public void OnScoreUpdate(float score)

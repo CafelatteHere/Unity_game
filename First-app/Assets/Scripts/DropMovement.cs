@@ -12,7 +12,9 @@ public class DropMovement : MonoBehaviour
 
     void Start()
     {
-        spawnObstacles = FindObjectOfType<SpawnObstacles>();
+        spawnObstacles = FindObjectOfType<SpawnObstacles>().GetComponent<SpawnObstacles>();
+        Debug.Log("spawn script found? " + spawnObstacles);
+        
 
     }
 
@@ -24,13 +26,13 @@ public class DropMovement : MonoBehaviour
         {
             int playerDamage = 1;
             AddDamageToPlayer?.Invoke(playerDamage);
-            Debug.Log("drops add damage to player");
         }
 
         if (collision.gameObject.tag != "ObstacleSpawnPlatform")
         {
+            spawnObstacles.pooledDrops2.Release(gameObject);
             gameObject.SetActive(false);
-            spawnObstacles.pooledDrops.Enqueue(gameObject);
+           // spawnObstacles.pooledDrops.Enqueue(gameObject);
         }
     }
 

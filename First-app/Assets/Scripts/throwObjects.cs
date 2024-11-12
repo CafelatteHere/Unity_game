@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class throwObjects : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class throwObjects : MonoBehaviour
 
     [Header("Actions & Settings")]
     [SerializeField] private int totalThrows;
-    private KeyCode throwKey = KeyCode.T;
-    private KeyCode throwKey2 = KeyCode.U;
+    //private KeyCode throwKey = KeyCode.T;
+    //private KeyCode throwKey2 = KeyCode.U;
     private CharacterMovements player;
     bool isGameOver;
 
@@ -26,17 +27,41 @@ public class throwObjects : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(throwKey) && totalThrows > 0)
-        {
-            Throw(objectToThrow); ;
-        }
+        //if (Input.GetKeyDown(throwKey) && totalThrows > 0)
+        //{
+        //    Throw(objectToThrow); ;
+        //}
 
-        if (Input.GetKeyDown(throwKey2) && totalThrows > 0)
-        {
-            Throw(roundObjectToThrow);
-        }
+        //if (Input.GetKeyDown(throwKey2) && totalThrows > 0)
+        //{
+        //    Throw(roundObjectToThrow);
+        //}
 
     }
+
+    //context here is float
+    public void OnFire(InputAction.CallbackContext context)
+    {
+        if (context.started && totalThrows > 0)
+        {
+            if (context.control.displayName == "T")
+            {
+                Throw(objectToThrow);
+            }
+        
+
+            else if (context.control.displayName == "U")
+            {
+                Throw(roundObjectToThrow);
+            }
+            else
+            {
+                Throw(objectToThrow);
+            }
+        }
+       
+    }
+
     private void OnEnable()
     {
         GameController.GameEnd += GameStateCheck;
@@ -58,7 +83,7 @@ public class throwObjects : MonoBehaviour
         {
             obj = Instantiate(obj, spawnPoint.position, objectToThrow.transform.rotation);
             var direction = new Vector2(player.currentPlayerDirection, 1);
-
+            Debug.Log("player direction" + player.currentPlayerDirection);
             obj.Launch(direction);
             totalThrows--;
         }

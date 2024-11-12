@@ -16,6 +16,7 @@ public class StoneMovement : MonoBehaviour, IThrowable
         //Destroy(gameObject, 3f); - we can do it too, but not using it becase in separate function we can set up some effects too;
         //invoke - to call smth after some time;
         Invoke(nameof(DestroyStone), destructionTime);
+   
     }
 
     void Update()
