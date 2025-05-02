@@ -1,4 +1,4 @@
-# first-app
+# Unity - game
 Test app for checking Unity features.
 
 2D game. 
